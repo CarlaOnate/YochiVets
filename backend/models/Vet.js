@@ -25,9 +25,10 @@ const vetSchema = new Schema(
   },
   {
     timestamps: true,
-    versionKey: false
+    versionKey: false,
+    minimize: false //Para que guarde objetos vacios, EN USER Y VET
   }
-);
+)
 
 vetSchema.plugin(PLM, { usernameField: 'email' });
 
