@@ -29,16 +29,14 @@ exports.editPet = async (req, res, next) => {
 
 exports.deletePet = async (req, res, next) => {
     const {id} = req.params
-    // const user = User.findById(req.user._id)
+    const user = await User.findById(req.user._id)
     let pet = await Pet.findById(id)
     let petName = pet.name
-    // console.log(user.schema.obj.pets, req.user._id)
-    // if(user.schema.obj.pets){
-    //     user.schema.obj.pets.forEach((petid) => {
-    //         console.log(petid, pet._id)
-    //         if(pet._id === petid) return user.pets.splice(index, 1)
-    //     })
-    // }
+    if(user.pets){
+        user.pets.forEach((petid) => {
+            if(petid === pet._id) return User.findByIdAndUpdate(req.user._id, { $pull: { pets: petid}}) //Esto no borra ñaña
+        })
+    }
     if(pet.appointments) {
         pet.appointments.forEach(async app => {
             await Appointment.findByIdAndDelete(app)
