@@ -46,10 +46,10 @@ app.use(cookieParser());
 app.use(logger('dev'));
 
 const index = require('./routes/index');
-const auth = require('./routes/clientAuth');
+const auth = require('./routes/client');
 app.use('/', index)
 app.use('/', auth)
-app.use('/vet', require('./routes/vetAuth'))
+app.use('/vet', require('./routes/vet'))
 
 // Uncomment this line for production
 // app.get('/*', (req, res) => res.sendFile(__dirname + '/public/index.html'));

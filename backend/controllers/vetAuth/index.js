@@ -17,9 +17,9 @@ exports.vetLogin = (req, res, next) => {
     res.status(200).json({ user })
 }
 
-exports.vetProfile = (req, res, next) => {
-    Vet.findById(req.user._id)
-      .then((user) => res.status(200).json({ user }))
-      .catch((err) => res.status(500).json({ err }))
-}
+// exports.vetProfile = (req, res, next) => {
+//     Vet.findById(req.user._id)
+//       .then((user) => res.status(200).json({ user }))
+//       .catch((err) => res.status(500).json({ err }))
+// }
 

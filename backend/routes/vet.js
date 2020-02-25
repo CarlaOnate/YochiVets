@@ -6,9 +6,9 @@ const {isAuth} = require('../middleware')
 const {vetSignup, vetLogin, vetProfile, getVet} = require('../controllers/vetAuth')
 //Tiene el prefijo de /vet
 
-router.post('/signup', vetSignup) 
+router.post('/signup', vetSignup)
 router.post('/login', passport.authenticate("local"), vetLogin)
-router.get('/profile', vetProfile)
 
 
+// router.get('/profile', vetProfile)
 module.exports = router

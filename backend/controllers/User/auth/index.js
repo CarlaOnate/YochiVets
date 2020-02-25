@@ -1,4 +1,4 @@
-const User = require('../../models/User')
+const User = require('../../../models/User')
 
 exports.signup = async (req, res, next) => {
     let userOnDB = await User.findOne({email: req.body.email})
@@ -14,13 +14,6 @@ exports.signup = async (req, res, next) => {
 exports.login = (req, res, next) => {
   const { user } = req
   res.status(200).json({ user })
-}
-
-exports.profile = (req, res, next) => {
-  console.log(req.user)
-  User.findById(req.user._id)
-  .then((user) => res.status(200).json({ user , msg: 'Profile route'}))
-  .catch((err) => res.status(500).json({ err }))
 }
 
 exports.logout = (req, res, next) => {
