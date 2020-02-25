@@ -12,8 +12,8 @@ exports.getUser = (req,res,next) => {
 
 exports.editUser = async (req, res, next) => { //LISTO!
     const {id} = req.params
-    const {email, name, image, address} = req.body
-    await User.findByIdAndUpdate(id, {email, name, image, address})
+    const {email, name, image, address, studies} = req.body
+    await User.findByIdAndUpdate(id, {email, name, image, address, studies})
     let newUser = await User.findById(id)
     res.status(200).json({newUser})
 }
