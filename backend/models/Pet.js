@@ -26,12 +26,7 @@ const petSchema = new Schema({
         type: Boolean,
         default: false
     },
-    owner: {
-        type: [Schema.Types.ObjectId],
-        ref: 'User',
-        default: []
-    },
-    appointment: {
+    appointments: {
         type: [Schema.Types.ObjectId],
         ref: 'Appointment',
         default: []

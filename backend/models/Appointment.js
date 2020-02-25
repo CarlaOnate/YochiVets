@@ -4,7 +4,7 @@ const appointmentSchema = new Schema({
     client: Schema.Types.ObjectId,
     vet: Schema.Types.ObjectId,
     pet: Schema.Types.ObjectId,
-    date: { //Tiene hora?
+    date: {
         type: Date,
         default: Date.now()
     },

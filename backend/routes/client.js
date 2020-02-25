@@ -11,6 +11,6 @@ router.post('/login', passport.authenticate('local'), login)
 router.get('/logout', logout)
 router.get('/client/:id', isAuth, getUser)
 router.put('/client/:id', isAuth, editUser)
-router.delete('client/:id', isAuth, deleteUser)
+// router.delete('client/:id', isAuth, deleteUser)
 
 module.exports = router

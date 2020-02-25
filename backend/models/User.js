@@ -14,11 +14,6 @@ const userSchema = new Schema(
       ref: 'Pet',
       default: []
     },
-    appointments: {
-      type: [Schema.Types.ObjectId],
-      ref: 'Appointment',
-      default: []
-    },
     address: {
       type: Object,
       default: {}
