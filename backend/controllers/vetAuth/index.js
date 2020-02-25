@@ -12,6 +12,7 @@ exports.vetSignup = async (req, res, next) => {
 }
 
 exports.vetLogin = (req, res, next) => {
+    console.log('loggedInVet', req.user)
     const { user } = req
     res.status(200).json({ user })
 }
@@ -21,3 +22,4 @@ exports.vetProfile = (req, res, next) => {
       .then((user) => res.status(200).json({ user }))
       .catch((err) => res.status(500).json({ err }))
 }
+
