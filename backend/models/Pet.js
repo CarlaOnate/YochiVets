@@ -26,11 +26,10 @@ const petSchema = new Schema({
         type: Boolean,
         default: false
     },
-    appointments: {
-        type: [Schema.Types.ObjectId],
-        ref: 'Appointment',
-        default: []
-    }
+    appointments: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Appointment'
+    }]
 })
 
 module.exports = model('Pet', petSchema)

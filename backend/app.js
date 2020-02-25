@@ -46,10 +46,9 @@ app.use(cookieParser());
 app.use(logger('dev'));
 
 const index = require('./routes/index');
-const auth = require('./routes/client');
+const auth = require('./routes/user');
 app.use('/', index)
 app.use('/', auth)
-app.use('/vet', require('./routes/vet'))
 app.use('/pet', require('./routes/pet'))
 app.use('/appointment', require('./routes/appointment'))
 

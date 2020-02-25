@@ -8,7 +8,6 @@ exports.createPet = async (req, res) => {
     const {pets, _id} = req.user
     await User.findByIdAndUpdate(_id, {pets: [...pets, newPet]})
     const user = await User.findById(_id)
-    console.log(user)
     res.status(200).json({user, newPet})
 }
 

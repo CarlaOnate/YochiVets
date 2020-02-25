@@ -8,4 +8,4 @@ const {createAppointment} = require('../controllers/Appointment')
 router.post('/', isAuth, createAppointment)
 // router.get('/:id', isAuth, getPet)
 
-module.exports = router 
+module.exports = router

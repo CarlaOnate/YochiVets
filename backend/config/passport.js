@@ -1,5 +1,4 @@
 const User = require('../models/User')
-const Vet = require('../models/Vet')
 const passport = require('passport')
 
 passport.use(User.createStrategy())
