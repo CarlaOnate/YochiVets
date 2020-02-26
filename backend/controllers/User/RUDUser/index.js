@@ -4,7 +4,13 @@ const Appointment = require('../../../models/Appointment')
 
 exports.getUser = (req,res,next) => {
     let {id} = req.params
-    User.findById(id).populate('appointments').populate('pets').then((user)=>{
+    User.findById(id).populate('appointments').populate('pets').populate({
+        path: 'pets',
+        populate: {
+            path: 'appointments',
+            model: 'Appointment'
+        }
+    }).then((user)=>{
         if(!user) return res.status(404).json({msg:'User not found, not logged in'})
         return res.status(200).json({ user })
     }).catch(e=>console.log(e))
