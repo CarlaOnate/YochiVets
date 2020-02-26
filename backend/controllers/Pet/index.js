@@ -29,19 +29,13 @@ exports.editPet = async (req, res, next) => {
 
 exports.deletePet = async (req, res, next) => {
     const {id} = req.params
-    const user = await User.findById(req.user._id)
+    const user = req.user
+    console.log(user)
     let pet = await Pet.findById(id)
     let petName = pet.name
-    if(user.pets){
-        user.pets.forEach((petid) => {
-            if(petid === pet._id) return User.findByIdAndUpdate(req.user._id, { $pull: { pets: petid}}) //Esto no borra ñaña
-        })
-    }
-    if(pet.appointments) {
-        pet.appointments.forEach(async app => {
-            await Appointment.findByIdAndDelete(app)
-        })
-    }
+    user.pets.splice(user.pets.indexOf(pet._id), 1)
+    console.log(user.pets, pet._id)
+    await User.findByIdAndUpdate(req.user._id, {pets: user.pets})
     await Pet.findByIdAndDelete(id)
     res.status(200).json({msg: `Dear ${petName} rest in pet heaven );`})
 }
