@@ -9,10 +9,10 @@ const appointmentSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
-    pet: {
+    pet: [{
         type: Schema.Types.ObjectId,
         ref: 'Pet'
-    },
+    }],
     date: {
         type: Date,
         default: Date.now()

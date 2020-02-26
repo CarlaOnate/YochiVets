@@ -12,8 +12,9 @@ exports.getUser = (req,res,next) => {
 
 exports.editUser = async (req, res, next) => { //LISTO!
     const {id} = req.params
-    const {email, name, image, address, studies} = req.body
-    await User.findByIdAndUpdate(id, {email, name, image, address, studies})
+    const {email, name, address, studies} = req.body
+    const {secure_url } = req.file
+    await User.findByIdAndUpdate(id, {email, name, image: secure_url, address, studies})
     let newUser = await User.findById(id)
     res.status(200).json({newUser})
 }

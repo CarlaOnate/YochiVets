@@ -22,7 +22,8 @@ exports.getPet = async(req, res) => {
 exports.editPet = async (req, res, next) => {
     const {id} = req.params
     const {name, age, medicalHistory, sex, breed, sterilized} = req.body
-    await Pet.findByIdAndUpdate(id, {name, age, medicalHistory, sex, breed, sterilized})
+    const {secure_url} = req.file
+    await Pet.findByIdAndUpdate(id, {name, age, medicalHistory, image: secure_url, sex, breed, sterilized})
     let pet = await Pet.findById(id)
     res.status(200).json({pet})
 }
