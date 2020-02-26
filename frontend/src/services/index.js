@@ -7,7 +7,7 @@ process.env.NODE_ENV === 'production'
 
 const service = axios.create({ withCredentials: true, baseURL });
 
-const MY_SERVICE = {
+const AUTH_SERVICE = {
   test: async () => {
     return await service.get('/');
   },

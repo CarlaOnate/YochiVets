@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import MyProvider from './context'
 import { BrowserRouter } from 'react-router-dom'
+import { ThemeProvider, CSSReset } from '@chakra-ui/core'
 
 
 import './index.css';
@@ -12,7 +13,10 @@ function WithContext() {
     return (
       <BrowserRouter>
         <MyProvider>
-          <Router />
+          <ThemeProvider>
+            <CSSReset/>
+            <Router />
+          </ThemeProvider>
         </MyProvider>
       </BrowserRouter>
     )
