@@ -1,9 +1,18 @@
 const {model, Schema} = require('mongoose')
 
 const appointmentSchema = new Schema({
-    client: Schema.Types.ObjectId,
-    vet: Schema.Types.ObjectId,
-    pet: Schema.Types.ObjectId,
+    client: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    vet: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    pet: {
+        type: Schema.Types.ObjectId,
+        ref: 'Pet'
+    },
     date: {
         type: Date,
         default: Date.now()
