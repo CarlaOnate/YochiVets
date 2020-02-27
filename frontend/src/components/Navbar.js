@@ -26,10 +26,12 @@ const Navbar = () => {
             <div style={linkStyle}>
             <NavLink exact to="/"><Button variantColor="blue" size='sm'>Home</Button></NavLink>
             <NavLink exact to="/findVets" bg=''>Find Vets</NavLink>
-            {context.state.user ? (
-             <NavLink exact to="/profile">Profile</NavLink>) :
+            {context.state.showNav ? (
+            <>
+             <NavLink exact to="/profile">Profile</NavLink>
+             <Button onClick={context.logoutSubmit} size="sm">Logout</Button>
+             </>) :
              <NavLink exact to="/client/signup">Signup - Login</NavLink>}
-            <NavLink exact to="/client/logout">Logout</NavLink>
             </div>
         </Flex>)}}
     </MyContext.Consumer>

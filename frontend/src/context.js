@@ -1,6 +1,6 @@
 import React, { Component, createContext } from 'react'
 import { withRouter } from 'react-router-dom'
-import {signup} from './services'
+import {signup, logout} from './services'
 
 export const MyContext = createContext()
 
@@ -21,10 +21,9 @@ class MyProvider extends Component{
         availableHours:[],
         about: ''
       },
-      signupSubmit: {},
-      loginSubmit: {},
+      user: {},
+      showNav: false,
       loginForm: {},
-      user: {}
     }
 
     handleSignupInput = async (e, type) => {
@@ -58,18 +57,25 @@ class MyProvider extends Component{
     signupSubmit = async(e) => {
       e.preventDefault()
       const {data} = await signup(this.state.signupForm)
-      this.setState({user: data})
+      this.setState({showNav: true, user: data})
       this.props.history.push('/findVets')
     }
 
+    logoutSubmit = async (e) => {
+      await logout()
+      this.setState({showNav: false})
+      this.props.history.push('/')
+    }
+
     render(){
-      const {handleSignupInput, handleAddress, state, signupSubmit} = this
+      const {handleSignupInput, handleAddress, state, signupSubmit, logoutSubmit} = this
         return(
           <MyContext.Provider
           value={{
             handleSignupInput,
             handleAddress,
             signupSubmit,
+            logoutSubmit,
             state
           }}
 
