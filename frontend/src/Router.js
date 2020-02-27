@@ -4,6 +4,7 @@ import Home from './components/home/Home';
 import NotFound from './components/404/NotFound.js';
 import Navbar from './components/Navbar'
 import Auth from './components/Auth';
+import FindVets from './components/FindVets';
 
 const Router = () => (
   <>
@@ -11,6 +12,7 @@ const Router = () => (
     <Switch>
       <Route exact path="/" component={Home} />
       <Route exact path="/client/signup" component={Auth}/>
+      <Route exact path="/profile" component={FindVets}/>
       <Route component={NotFound} />
     </Switch>
   </>

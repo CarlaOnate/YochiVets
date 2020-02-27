@@ -8,14 +8,16 @@ import {
     Icon,
     FormHelperText,
     FormLabel,
-    Heading
+    Heading,
+    Button,
+    Box
   } from '@chakra-ui/core'
 
 
-const FormSubmit = ({signupInput, state, handleAddress}) => {
+const FormSubmit = ({signupInput, state, handleAddress, submit}) => {
   let {signupForm: {name, email, phone, address}} = state
     return (
-       <>
+       <Box onSubmit={submit} as="form">
         <FormControl isRequired h={'100%'} justifyContent="spaceAround">
           <Heading>Signup</Heading>
               <FormLabel htmlFor="text">Full name</FormLabel>
@@ -43,7 +45,8 @@ const FormSubmit = ({signupInput, state, handleAddress}) => {
                 </Flex>
               </InputGroup>
             </FormControl>
-       </>
+            <Button type="submit" p={2} m={4}>Submit</Button>
+       </Box>
     )
 }
 

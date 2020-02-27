@@ -25,7 +25,7 @@ app.use(
     credentials: true,
     origin: [process.env.FRONTENDPOINT]
   })
-);
+)
 
 app.use(
   session({

@@ -31,11 +31,9 @@ exports.editPet = async (req, res, next) => {
 exports.deletePet = async (req, res, next) => {
     const {id} = req.params
     const user = req.user
-    console.log(user)
     let pet = await Pet.findById(id)
     let petName = pet.name
     user.pets.splice(user.pets.indexOf(pet._id), 1)
-    console.log(user.pets, pet._id)
     await User.findByIdAndUpdate(req.user._id, {pets: user.pets})
     await Pet.findByIdAndDelete(id)
     res.status(200).json({msg: `Dear ${petName} rest in pet heaven );`})

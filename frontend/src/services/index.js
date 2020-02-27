@@ -3,23 +3,22 @@ let baseURL;
 
 process.env.NODE_ENV === 'production'
   ? (baseURL = 'here should be your production endpoint')
-  : (baseURL = 'http://localhost:3000');
+  : (baseURL = 'http://localhost:3000')
 
-const service = axios.create({ withCredentials: true, baseURL });
+const service = axios.create({ baseURL, withCredentials: true })
 
-const AUTH_SERVICE = {
-  test: async () => {
-    return await service.get('/');
-  },
-  signup: async (user) => {
-    return await SERVICE.post('/signup', user);
-  },
-  login: async (user) => {
-    return await SERVICE.post('/login', user);
-  },
-  logOut: async () => {
-    return await SERVICE.get('/logout');
-  }
-};
+export const signup = async (user) => {
+  console.log('peticion')
+  return await service.post('/signup', user)
+}
 
-export default MY_SERVICE;
+export const login = async(user) => {
+  return await service.post('/login', user)
+}
+
+export const logout = async() => {
+  return await service.get('/logout')
+}
+
+
+

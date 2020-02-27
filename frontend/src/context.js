@@ -1,5 +1,6 @@
 import React, { Component, createContext } from 'react'
 import { withRouter } from 'react-router-dom'
+import {signup} from './services'
 
 export const MyContext = createContext()
 
@@ -36,7 +37,6 @@ class MyProvider extends Component{
         }
       }
       ))
-      console.log(this.state.signupForm)
     }
 
     handleAddress = (e) => {
@@ -54,17 +54,21 @@ class MyProvider extends Component{
       ))
     }
 
-    signupSubmit = async() => {
-      
+    signupSubmit = async(e) => {
+      e.preventDefault()
+      const {data} = await signup(this.state.signupForm)
+      console.log('Entrando en peticion submit', data)
+      this.props.history.push('/findVets')
     }
 
     render(){
-      const {handleSignupInput, handleAddress, state} = this
+      const {handleSignupInput, handleAddress, state, signupSubmit} = this
         return(
           <MyContext.Provider
           value={{
             handleSignupInput,
             handleAddress,
+            signupSubmit,
             state
           }}
 
