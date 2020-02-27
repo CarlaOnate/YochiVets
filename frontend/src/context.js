@@ -10,6 +10,7 @@ class MyProvider extends Component{
         name: '',
         role: '',
         email: '',
+        password: '',
         phone: Number,
         address: {
           street: '',
@@ -28,12 +29,12 @@ class MyProvider extends Component{
 
     handleSignupInput = async (e, type) => {
       const {name, value} = e.target
-      this.setState({role: type})
       this.setState(prevState => ({
         ...prevState,
         signupForm: {
           ...prevState.signupForm,
-          [name]: value
+          [name]: value,
+          role: type
         }
       }
       ))
@@ -57,7 +58,7 @@ class MyProvider extends Component{
     signupSubmit = async(e) => {
       e.preventDefault()
       const {data} = await signup(this.state.signupForm)
-      console.log('Entrando en peticion submit', data)
+      this.setState({user: data})
       this.props.history.push('/findVets')
     }
 

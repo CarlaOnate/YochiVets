@@ -1,4 +1,5 @@
 import React from 'react'
+import { MyContext } from '../context'
 import { NavLink } from 'react-router-dom'
 import { Flex, Button } from '@chakra-ui/core'
 
@@ -15,6 +16,9 @@ const navStyle = {
 
 const Navbar = () => {
     return (
+    <MyContext.Consumer>
+    {context => {
+        return (
         <Flex as="nav" justify='space-between' direction='row' style={navStyle}>
             <div>
                 {/* logo */}
@@ -22,10 +26,13 @@ const Navbar = () => {
             <div style={linkStyle}>
             <NavLink exact to="/"><Button variantColor="blue" size='sm'>Home</Button></NavLink>
             <NavLink exact to="/findVets" bg=''>Find Vets</NavLink>
-            <NavLink exact to="/client/signup">Signup - Login</NavLink>
+            {context.state.user ? (
+             <NavLink exact to="/profile">Profile</NavLink>) :
+             <NavLink exact to="/client/signup">Signup - Login</NavLink>}
             <NavLink exact to="/client/logout">Logout</NavLink>
             </div>
-        </Flex>
+        </Flex>)}}
+    </MyContext.Consumer>
     )
 }
 
