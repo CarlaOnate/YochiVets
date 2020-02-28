@@ -1,6 +1,6 @@
 import React, { Component, createContext } from 'react'
 import { withRouter } from 'react-router-dom'
-import {signup, logout, login} from './services'
+import {signup, logout, login, signupVet} from './services'
 
 export const MyContext = createContext()
 
@@ -33,9 +33,9 @@ class MyProvider extends Component{
           cedula: '',
           specialty: '',
           animal: '',
-          university: '',
-          diploma: ''
+          university: ''
         },
+        diploma: '',
         availableHours:[],
         about: ''
       },
@@ -130,8 +130,13 @@ class MyProvider extends Component{
     }
 
     handleHoursInput = (e) => {
-      this.setState({signupVet: {availableHours: e}})
-      console.log(e, this.state.signupVet.availableHours, this.state.signupVet.availableHours.includes(e))
+      this.setState(prevState => ({
+        ...prevState,
+        signupVet: {
+          ...prevState.signupVet,
+          availableHours: e
+        }
+      }))
     }
 
     handleCounter = (e, type) => {
@@ -155,7 +160,8 @@ class MyProvider extends Component{
 
     signupVetSubmit = async (e) => {
       e.preventDefault()
-      const {data} = await signup(this.state.signupVet)
+      console.log(this.state.signupVet)
+      const {data} = await signupVet(this.state.signupVet)
       this.props.history.push('/profile')
       this.setState({showNav: true, user: data})
     }

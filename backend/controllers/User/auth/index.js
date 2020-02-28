@@ -4,6 +4,7 @@ const passport = require('passport')
 exports.signup = async (req, res, next) => {
     let userOnDB = await User.findOne({email: req.body.email})
     if(!userOnDB){
+      console.log(req.body)
       let user = await User.register(req.body, req.body.password)
       if(!user) return res.status(500).json({ msg: 'An error ocurred, signup client'})
       res.status(200).json({user})

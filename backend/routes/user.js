@@ -8,6 +8,7 @@ const {signup, login, logout} = require('../controllers/User/auth')
 const { editUser, deleteUser, getUser} = require('../controllers/User/RUDUser')
 
 router.post('/signup', signup)
+router.post('/vet-signup', uploadCloud.single('diploma'), signup)
 router.post('/login', passport.authenticate('local'), login)
 router.get('/logout', logout)
 router.get('/client/:id', isAuth, getUser)
