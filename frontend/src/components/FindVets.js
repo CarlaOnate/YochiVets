@@ -10,21 +10,26 @@ import {
     RadioGroup,
     Button,
     Box,
-    FormHelperText,
-    Stack,
+    Stack
   } from '@chakra-ui/core'
-  import { } from '../services'
+  import { getAllVetsAPI} from '../services'
 
 export default class FindVets extends Component {
     state = {
         vets: [],
     }
 
+    componentDidMount(){
+      this.getAllVets()
+    }
+
     getAllVets = async () => {
-        
+        let {data} = await getAllVetsAPI()
+        this.setState({vets: data})
     }
 
     render() {
+      console.log(this.state.vets)
         return (
             <div>
             <Heading>Find Vets</Heading>
@@ -45,8 +50,8 @@ export default class FindVets extends Component {
                </RadioGroup>
                <Button type="submit">Search</Button>
             </Box>
-              
-
+            <Stack>
+            </Stack>
             </div>
         )
     }

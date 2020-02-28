@@ -6,15 +6,18 @@ const {isAuth} = require('../middleware')
 let uploadCloud = require('../config/cloudinary')
 const {signup, login, logout} = require('../controllers/User/auth')
 const { editUser, deleteUser, getUser} = require('../controllers/User/RUDUser')
+const { getAllVets } = require('../controllers/User/Vets')
 
 router.post('/signup', signup)
-router.post('/vet-signup', uploadCloud.single('diploma'), signup)
 router.post('/login', passport.authenticate('local'), login)
 router.get('/logout', logout)
 router.get('/client/:id', isAuth, getUser)
 router.put('/client/:id', isAuth, uploadCloud.single('image'), editUser)
 router.delete('/client/:id', isAuth, deleteUser)
 
-// router.get('/vetProfile', vetProfile)
+//VETS routes
+
+router.post('/vet-signup', uploadCloud.single('diploma'), signup)
+router.get('/allVets', getAllVets)
 
 module.exports = router
