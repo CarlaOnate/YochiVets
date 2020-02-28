@@ -23,7 +23,10 @@ class MyProvider extends Component{
       },
       user: {},
       showNav: false,
-      loginForm: {},
+      loginForm: {
+        email: '',
+        password: ''
+      },
     }
 
     handleSignupInput = async (e, type) => {
@@ -54,12 +57,33 @@ class MyProvider extends Component{
       ))
     }
 
+    handleLogin = (e) => {
+      const {name, value} = e.target
+      this.setState(prevState => ({
+        ...prevState,
+        loginForm: {
+          ...prevState.loginForm,
+          [name]: value
+        }
+      }))
+    }
+
+
     signupSubmit = async(e) => {
       e.preventDefault()
       const {data} = await signup(this.state.signupForm)
       this.setState({showNav: true, user: data})
       this.props.history.push('/findVets')
     }
+
+    loginSubmit = async(e) => {
+      console.log('loginSubmit')
+      e.preventDefault()
+      const {data} = await login(this.state.loginForm)
+      this.props.history.push('/findVets')
+      this.setState({showNav: true, user: data})
+    }
+
 
     logoutSubmit = async (e) => {
       await logout()
@@ -68,7 +92,7 @@ class MyProvider extends Component{
     }
 
     render(){
-      const {handleSignupInput, handleAddress, state, signupSubmit, logoutSubmit} = this
+      const {handleSignupInput, handleAddress, state, signupSubmit, logoutSubmit, loginSubmit, handleLogin} = this
         return(
           <MyContext.Provider
           value={{
@@ -76,6 +100,8 @@ class MyProvider extends Component{
             handleAddress,
             signupSubmit,
             logoutSubmit,
+            loginSubmit,
+            handleLogin,
             state
           }}
 
