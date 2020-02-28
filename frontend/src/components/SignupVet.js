@@ -14,7 +14,8 @@ import {
     Stack,
     Checkbox,
     CheckboxGroup,
-    Textarea
+    Textarea,
+    FormControl
   } from '@chakra-ui/core'
   import { MyContext } from '../context'
 
@@ -27,9 +28,10 @@ const SignupVet = () => {
           const { handleSignupVet, handleVetAddress, handleStudiesInput, handleHoursInput } = context
           return (
           <Box onSubmit={context.signupVetSubmit} as="form" key='signupVetFormKey' enctype="multipart/form-data">
+          <FormControl isRequired>
           {context.state.counter <= 0 ? (
         <>
-            <Heading>First enter your name email and password:</Heading>
+          <Heading>First enter your name email and password:</Heading>
             <Heading>Signup</Heading>
               <FormLabel htmlFor="text">Full name</FormLabel>
               <Input onChange={handleSignupVet} value={name} name="name" type="text" placeholder="Full name"/>
@@ -123,8 +125,10 @@ const SignupVet = () => {
               </CheckboxGroup>
             <Button onClick={(e) => context.handleCounter(e)}> Go Back</Button>
             <Button type="submit">Continue</Button>
+
         </>
         )}
+        </FormControl>
         </Box>
         )}}
       </MyContext.Consumer>
