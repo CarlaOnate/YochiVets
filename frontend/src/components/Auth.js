@@ -4,7 +4,7 @@ import {
   Stack,
 } from '@chakra-ui/core'
 import FormSubmit from './FormSubmit'
-import FormLogin from './'
+import FormLogin from './FormLogin'
 import { MyContext } from '../context'
 
 
@@ -26,7 +26,7 @@ const Auth = () => {
         <Stack  p={8} border="1px" borderRadius="md" borderColor="gray.200" h={'100%'} rounded textAlign={'start'}>
           <FormLogin
             submit={context.loginSubmit}
-            signupInput={context.handleLogin}
+            handleLogin={context.handleLogin}
             state={context.state}
           />
          </Stack>

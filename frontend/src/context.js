@@ -1,6 +1,6 @@
 import React, { Component, createContext } from 'react'
 import { withRouter } from 'react-router-dom'
-import {signup, logout} from './services'
+import {signup, logout, login} from './services'
 
 export const MyContext = createContext()
 
@@ -83,7 +83,6 @@ class MyProvider extends Component{
       this.props.history.push('/findVets')
       this.setState({showNav: true, user: data})
     }
-
 
     logoutSubmit = async (e) => {
       await logout()
