@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import VetCard from './VetCard'
 import {
     InputGroup,
     InputLeftAddon,
@@ -10,17 +11,20 @@ import {
     RadioGroup,
     Button,
     Box,
-    Stack
+    Stack,
+    Spinner
   } from '@chakra-ui/core'
   import { getAllVetsAPI} from '../services'
 
 export default class FindVets extends Component {
     state = {
-        vets: [],
+      vets: [],
+      spinner: true
     }
 
-    componentDidMount(){
+    componentDidMount = () => {
       this.getAllVets()
+      this.setState({spinner: false})
     }
 
     getAllVets = async () => {
@@ -29,7 +33,7 @@ export default class FindVets extends Component {
     }
 
     render() {
-      console.log(this.state.vets)
+      console.log(this.state.spinner)
         return (
             <div>
             <Heading>Find Vets</Heading>
@@ -51,6 +55,18 @@ export default class FindVets extends Component {
                <Button type="submit">Search</Button>
             </Box>
             <Stack>
+            {this.state.spinner ? (<Spinner
+              thickness="4px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color="blue.500"
+              size="xl"
+            />) : this.state.vets.map(el => {
+              return (
+              <VetCard key={el._id} name={el.name}
+              image={el.image} specialty={el.studies.specialty}
+              animal={el.studies.animal}/>)
+            })}
             </Stack>
             </div>
         )
