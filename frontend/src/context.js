@@ -16,6 +16,18 @@ class MyProvider extends Component{
           street: '',
           neighborhood: '',
           code: Number
+        }
+      },
+      signupVet: {
+        name: '',
+        role: '',
+        email: '',
+        password: '',
+        phone: Number,
+        address: {
+          street: '',
+          neighborhood: '',
+          code: Number
         },
         studies: {},
         availableHours:[],
@@ -27,6 +39,7 @@ class MyProvider extends Component{
         email: '',
         password: ''
       },
+      counter: 0
     }
 
     handleSignupInput = async (e, type) => {
@@ -68,6 +81,22 @@ class MyProvider extends Component{
       }))
     }
 
+    handleSignupVet = (e) => {
+      const {name, value} = e.target
+      this.setState(prevState => ({
+        ...prevState,
+        role: 'VET',
+        signupVet: {
+          ...prevState.signupVet,
+          [name]: value
+        }
+      }))
+    }
+
+    handleCounter = (e, type) => {
+      type === 'add' ? this.setState({counter: this.state.counter+1}) : this.setState({counter: this.state.counter-1})
+    }
+
 
     signupSubmit = async(e) => {
       e.preventDefault()
@@ -77,10 +106,16 @@ class MyProvider extends Component{
     }
 
     loginSubmit = async(e) => {
-      console.log('loginSubmit')
       e.preventDefault()
       const {data} = await login(this.state.loginForm)
       this.props.history.push('/findVets')
+      this.setState({showNav: true, user: data})
+    }
+
+    signupVetSubmit = async (e) => {
+      e.preventDefault()
+      const {data} = await signup(this.state.signupVet)
+      this.props.history.push('/profile')
       this.setState({showNav: true, user: data})
     }
 
@@ -91,7 +126,8 @@ class MyProvider extends Component{
     }
 
     render(){
-      const {handleSignupInput, handleAddress, state, signupSubmit, logoutSubmit, loginSubmit, handleLogin} = this
+      const {handleSignupInput, handleAddress, state, signupSubmit, logoutSubmit, loginSubmit, 
+        handleLogin, handleSignupVet, handleCounter, signupVetSubmit} = this
         return(
           <MyContext.Provider
           value={{
@@ -101,6 +137,9 @@ class MyProvider extends Component{
             logoutSubmit,
             loginSubmit,
             handleLogin,
+            handleSignupVet,
+            handleCounter,
+            signupVetSubmit,
             state
           }}
 

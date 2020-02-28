@@ -5,7 +5,8 @@ import NotFound from './components/404/NotFound.js';
 import Navbar from './components/Navbar'
 import Auth from './components/Auth';
 import Profile from './components/Profile'
-import FindVets from './components/FindVets';
+import FindVets from './components/FindVets'
+import SignupVet from './components/SignupVet.js'
 
 const Router = () => (
   <>
@@ -15,6 +16,7 @@ const Router = () => (
       <Route exact path="/client/signup" component={Auth}/>
       <Route exact path="/findVets" component={FindVets}/>
       <Route exact path="/profile" component={Profile}/>
+      <Route exact path="/register-vet" component={SignupVet}/>
       <Route component={NotFound} />
     </Switch>
   </>
