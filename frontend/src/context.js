@@ -29,7 +29,13 @@ class MyProvider extends Component{
           neighborhood: '',
           code: Number
         },
-        studies: {},
+        studies: {
+          cedula: '',
+          specialty: '',
+          animal: '',
+          university: '',
+          diploma: ''
+        },
         availableHours:[],
         about: ''
       },
@@ -85,12 +91,43 @@ class MyProvider extends Component{
       const {name, value} = e.target
       this.setState(prevState => ({
         ...prevState,
-        role: 'VET',
         signupVet: {
           ...prevState.signupVet,
+          role: 'VET',
           [name]: value
         }
       }))
+    }
+
+    handleVetAddress = (e) => {
+      const {name, value} = e.target
+      this.setState(prevState => ({
+        ...prevState,
+        signupVet: {
+          ...prevState.signupVet,
+          address: {
+            ...prevState.signupVet.address,
+            [name]: value
+          }
+        }
+      }
+      ))
+    }
+
+    handleStudiesInput = (e) => {
+      console.log(e, e.target.value, e.target.name,'Checar evento de checkbox')
+      const {name, value} = e.target
+      this.setState(prevState => ({
+        ...prevState,
+        signupVet: {
+          ...prevState.signupVet,
+          studies: {
+            ...prevState.signupVet.studies,
+            [name]: value
+          }
+        }
+      }
+      ))
     }
 
     handleCounter = (e, type) => {
@@ -126,8 +163,8 @@ class MyProvider extends Component{
     }
 
     render(){
-      const {handleSignupInput, handleAddress, state, signupSubmit, logoutSubmit, loginSubmit, 
-        handleLogin, handleSignupVet, handleCounter, signupVetSubmit} = this
+      const {handleSignupInput, handleAddress, state, signupSubmit, logoutSubmit, loginSubmit,
+        handleLogin, handleSignupVet, handleCounter, signupVetSubmit, handleVetAddress, handleStudiesInput} = this
         return(
           <MyContext.Provider
           value={{
@@ -140,6 +177,8 @@ class MyProvider extends Component{
             handleSignupVet,
             handleCounter,
             signupVetSubmit,
+            handleVetAddress,
+            handleStudiesInput,
             state
           }}
 
