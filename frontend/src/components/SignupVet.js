@@ -23,10 +23,10 @@ const SignupVet = () => {
     return (
     <MyContext.Consumer>
       {context => {
-          const { signupVet: {name, email, password, phone, address, studies, availableHours, about}} = context.state
+          const { signupVet: {name, email, password, phone, address, studies, availableHours, about, diploma}} = context.state
           const { handleSignupVet, handleVetAddress, handleStudiesInput, handleHoursInput } = context
           return (
-          <Box onSubmit={context.signupVetSubmit} as="form" enctype="multipart/form-data">
+          <Box onSubmit={context.signupVetSubmit} as="form" key='signupVetFormKey' enctype="multipart/form-data">
           {context.state.counter <= 0 ? (
         <>
             <Heading>First enter your name email and password:</Heading>
@@ -64,7 +64,7 @@ const SignupVet = () => {
                 <Input onChange={handleVetAddress} value={address.neighborhood} name="neighborhood" type="text" placeholder="Col." />
                 <Input onChange={handleVetAddress} value={address.code} name="code" type="text" placeholder="Postal Code" />
               </InputGroup>
-            <Button onClick={(e) => context.handleCounter(e, 'sub')}> Go Back</Button>
+            <Button onClick={(e) => context.handleCounter(e)}> Go Back</Button>
             <Button onClick={(e) => context.handleCounter(e, 'add')}> Next Step</Button>
         </>
         ) : context.state.counter === 2 ? (
@@ -74,31 +74,31 @@ const SignupVet = () => {
                 <Input onChange={handleStudiesInput} value={studies.cedula} name="cedula" type="text" placeholder="ID number (cédula profesional)" />
                 <Stack spacing={3}>
                 {/* onChange={} value={}*/}
-                  <RadioGroup name="specialty"onChange={handleStudiesInput} value={studies.specialty} isInline>
-                    <Radio key="General" value="General Medicine">General Medicine</Radio>
-                    <Radio key="Behaviour" value="Behaviour">Behaviour</Radio>
-                    <Radio key="Cardiology" value="Cardiology">Cardiology</Radio>
-                    <Radio key="Neurology" value="Neurology">Neurology</Radio>
-                    <Radio key="Oncology" value="Oncology">Oncology</Radio>
-                    <Radio key="Nutrition" value="Nutrition">Nutrition</Radio>
+                  <RadioGroup name="specialty" key="0" onChange={handleStudiesInput} value={studies.specialty} isInline>
+                    <Radio  key="1" value="General Medicine">General Medicine</Radio>
+                    <Radio  key="2"  value="Behaviour">Behaviour</Radio>
+                    <Radio  key="3"  value="Cardiology">Cardiology</Radio>
+                    <Radio  key="4"  value="Neurology">Neurology</Radio>
+                    <Radio  key="5"  value="Oncology">Oncology</Radio>
+                    <Radio  key="6"  value="Nutrition">Nutrition</Radio>
                     <FormLabel>Other</FormLabel>
                     {/* <Input name="specialty" value={studies.specialty} type="text" placeholder="type here your specialty"/> */}
                   </RadioGroup>
                 </Stack>
-                <RadioGroup name="animal" onChange={handleStudiesInput} value={studies.animal} isInline>
-                    <Radio key="Dogs" name="animal" value="Dogs">Dogs</Radio>
-                    <Radio key="Cats" name="animal" value="Cats">Cats</Radio>
-                    <Radio key="Ferrets" name="animal" value="Ferrets">Ferrets</Radio>
-                    <Radio key="Birds" name="animal" value="Birds">Birds</Radio>
-                    <Radio key="Exotic" name="animal" value="Exotic animals">Exotic animals</Radio>
+                <RadioGroup name="animal" key="animal" onChange={handleStudiesInput} value={studies.animal} isInline>
+                    <Radio  key="7" name="animal" value="Dogs">Dogs</Radio>
+                    <Radio  key="8" name="animal" value="Cats">Cats</Radio>
+                    <Radio  key="10" name="animal" value="Ferrets">Ferrets</Radio>
+                    <Radio  key="11" name="animal" value="Birds">Birds</Radio>
+                    <Radio  key="12" name="animal" value="Exotic animals">Exotic animals</Radio>
                     <FormLabel>Other</FormLabel>
                     {/* <Input name="animal" type="text" value={studies.animal} placeholder="what animal can you treat?"/> */}
                 </RadioGroup>
                   <FormLabel>Where did you study?</FormLabel>
                 <Input onChange={handleStudiesInput} value={studies.university} name="university" type="university" placeholder="Where did you study?" />
                   <FormLabel>Upload a picture of your diploma</FormLabel>
-                <Input onChange={handleStudiesInput} value={studies.diploma} name="diploma" type="file"/>
-            <Button onClick={(e) => context.handleCounter(e, 'sub')}>Go Back</Button>
+                <Input onChange={handleSignupVet} value={diploma} name="diploma" type="file"/>
+            <Button onClick={(e) => context.handleCounter(e)}>Go Back</Button>
             <Button onClick={(e) => context.handleCounter(e, 'add')}> Next Step</Button>
         </>
         ) : (
@@ -108,6 +108,7 @@ const SignupVet = () => {
             <FormLabel>Tell us about yourself</FormLabel>
               <Textarea onChange={handleSignupVet} value={about} name="about" placeholder="Tell us about yourself"/>
               <CheckboxGroup
+               key="signuphours"
                onChange={handleHoursInput}
                 name="availableHours"
                 value={availableHours}
@@ -120,7 +121,7 @@ const SignupVet = () => {
                 <Checkbox key="17:00" value="17:00">17:00</Checkbox>
                 <Checkbox key="19:00" value="19:00">19:00</Checkbox>
               </CheckboxGroup>
-            <Button onClick={(e) => context.handleCounter(e, 'sub')}> Go Back</Button>
+            <Button onClick={(e) => context.handleCounter(e)}> Go Back</Button>
             <Button type="submit">Continue</Button>
         </>
         )}

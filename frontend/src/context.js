@@ -33,9 +33,9 @@ class MyProvider extends Component{
           cedula: '',
           specialty: '',
           animal: '',
-          university: '',
-          diploma: ''
+          university: ''
         },
+        diploma: '',
         availableHours:[],
         about: ''
       },
