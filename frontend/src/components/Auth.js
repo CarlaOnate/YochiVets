@@ -25,8 +25,8 @@ const Auth = () => {
          </Stack>
         <Stack  p={8} border="1px" borderRadius="md" borderColor="gray.200" h={'100%'} rounded textAlign={'start'}>
           <FormLogin
-            submit={context.signupSubmit}
-            signupInput={context.handleSignupInput}
+            submit={context.loginSubmit}
+            signupInput={context.handleLogin}
             state={context.state}
           />
          </Stack>
