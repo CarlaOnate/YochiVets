@@ -115,7 +115,6 @@ class MyProvider extends Component{
     }
 
     handleStudiesInput = (e) => {
-      console.log(e, e.target.value, e.target.name,'Checar evento de checkbox')
       const {name, value} = e.target
       this.setState(prevState => ({
         ...prevState,
@@ -128,6 +127,11 @@ class MyProvider extends Component{
         }
       }
       ))
+    }
+
+    handleHoursInput = (e) => {
+      this.setState({signupVet: {availableHours: e}})
+      console.log(e, this.state.signupVet.availableHours, this.state.signupVet.availableHours.includes(e))
     }
 
     handleCounter = (e, type) => {
@@ -164,7 +168,8 @@ class MyProvider extends Component{
 
     render(){
       const {handleSignupInput, handleAddress, state, signupSubmit, logoutSubmit, loginSubmit,
-        handleLogin, handleSignupVet, handleCounter, signupVetSubmit, handleVetAddress, handleStudiesInput} = this
+        handleLogin, handleSignupVet, handleCounter, signupVetSubmit, handleVetAddress, handleStudiesInput
+      , handleHoursInput} = this
         return(
           <MyContext.Provider
           value={{
@@ -179,6 +184,7 @@ class MyProvider extends Component{
             signupVetSubmit,
             handleVetAddress,
             handleStudiesInput,
+            handleHoursInput,
             state
           }}
 

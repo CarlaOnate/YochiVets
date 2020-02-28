@@ -23,9 +23,8 @@ const SignupVet = () => {
     return (
     <MyContext.Consumer>
       {context => {
-          console.log(context.state)
           const { signupVet: {name, email, password, phone, address, studies, availableHours, about}} = context.state
-          const { handleSignupVet, handleVetAddress, handleStudiesInput } = context
+          const { handleSignupVet, handleVetAddress, handleStudiesInput, handleHoursInput } = context
           return (
           <Box onSubmit={context.signupVetSubmit} as="form" enctype="multipart/form-data">
           {context.state.counter <= 0 ? (
@@ -109,16 +108,17 @@ const SignupVet = () => {
             <FormLabel>Tell us about yourself</FormLabel>
               <Textarea onChange={handleSignupVet} value={about} name="about" placeholder="Tell us about yourself"/>
               <CheckboxGroup
+               onChange={handleHoursInput}
                 name="availableHours"
                 value={availableHours}
                 isInline
                 spacing={8}>
-                <Checkbox value="8:00">8:00</Checkbox>
-                <Checkbox value="10:00">10:00</Checkbox>
-                <Checkbox value="13:00">13:00</Checkbox>
-                <Checkbox value="15:00">15:00</Checkbox>
-                <Checkbox value="17:00">17:00</Checkbox>
-                <Checkbox value="19:00">19:00</Checkbox>
+                <Checkbox key="8:00" value="8:00">8:00</Checkbox>
+                <Checkbox key="10:00" value="10:00">10:00</Checkbox>
+                <Checkbox key="13:00" value="13:00">13:00</Checkbox>
+                <Checkbox key="15:00" value="15:00">15:00</Checkbox>
+                <Checkbox key="17:00" value="17:00">17:00</Checkbox>
+                <Checkbox key="19:00" value="19:00">19:00</Checkbox>
               </CheckboxGroup>
             <Button onClick={(e) => context.handleCounter(e, 'sub')}> Go Back</Button>
             <Button type="submit">Continue</Button>
