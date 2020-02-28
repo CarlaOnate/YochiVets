@@ -86,11 +86,11 @@ const SignupVet = () => {
                   </RadioGroup>
                 </Stack>
                 <RadioGroup name="animal" onChange={handleStudiesInput} value={studies.animal} isInline>
-                    <Radio name="animal" value="Dogs">Dogs</Radio>
-                    <Radio name="animal" value="Cats">Cats</Radio>
-                    <Radio name="animal" value="Ferrets">Ferrets</Radio>
-                    <Radio name="animal" value="Birds">Birds</Radio>
-                    <Radio name="animal" value="Exotic animals">Exotic animals</Radio>
+                    <Radio key="Dogs" name="animal" value="Dogs">Dogs</Radio>
+                    <Radio key="Cats" name="animal" value="Cats">Cats</Radio>
+                    <Radio key="Ferrets" name="animal" value="Ferrets">Ferrets</Radio>
+                    <Radio key="Birds" name="animal" value="Birds">Birds</Radio>
+                    <Radio key="Exotic" name="animal" value="Exotic animals">Exotic animals</Radio>
                     <FormLabel>Other</FormLabel>
                     {/* <Input name="animal" type="text" value={studies.animal} placeholder="what animal can you treat?"/> */}
                 </RadioGroup>

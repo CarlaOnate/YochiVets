@@ -8,8 +8,11 @@ process.env.NODE_ENV === 'production'
 const service = axios.create({ baseURL, withCredentials: true })
 
 export const signup = async (user) => {
-  console.log('peticion', user)
   return await service.post('/signup', user)
+}
+export const signupVet = async (user) => {
+  console.log('vetSignup', user)
+  return await service.post('/vet-signup', user)
 }
 
 export const login = async(user) => {
