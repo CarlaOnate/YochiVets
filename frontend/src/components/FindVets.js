@@ -22,18 +22,18 @@ export default class FindVets extends Component {
       spinner: true
     }
 
-    componentDidMount = () => {
-      this.getAllVets()
+    componentDidMount = async () => {
+      await this.getAllVets()
       this.setState({spinner: false})
     }
 
     getAllVets = async () => {
-        let {data} = await getAllVetsAPI()
-        this.setState({vets: data})
+        let { data } = await getAllVetsAPI()
+        this.setState({ vets: data.vets })
     }
 
     render() {
-      console.log(this.state.spinner)
+      let { vets, spinner } = this.state
         return (
             <div>
             <Heading>Find Vets</Heading>
@@ -55,13 +55,13 @@ export default class FindVets extends Component {
                <Button type="submit">Search</Button>
             </Box>
             <Stack>
-            {this.state.spinner ? (<Spinner
+            {spinner ? (<Spinner
               thickness="4px"
               speed="0.65s"
               emptyColor="gray.200"
               color="blue.500"
               size="xl"
-            />) : this.state.vets.map(el => {
+            />) : vets.map(el => {
               return (
               <VetCard key={el._id} name={el.name}
               image={el.image} specialty={el.studies.specialty}
