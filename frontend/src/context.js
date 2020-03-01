@@ -155,7 +155,7 @@ class MyProvider extends Component{
       e.preventDefault()
       const {data} = await login(this.state.loginForm)
       this.props.history.push('/findVets')
-      this.setState({showNav: true, user: data})
+      this.setState({showNav: true, user: data.user})
     }
 
     signupVetSubmit = async (e) => {
@@ -163,7 +163,7 @@ class MyProvider extends Component{
       console.log(this.state.signupVet)
       const {data} = await signupVet(this.state.signupVet)
       this.props.history.push('/profile')
-      this.setState({showNav: true, user: data})
+      this.setState({showNav: true, user: data.user})
     }
 
     logoutSubmit = async (e) => {

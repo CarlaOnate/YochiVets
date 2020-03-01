@@ -23,10 +23,22 @@ export const logout = async() => {
   return await service.get('/logout')
 }
 
+export const getLogged = async () => {
+  return await service.get('/client/logged')
+}
+
+export const getUser = async (id) => {
+  return await service.get(`/client/${id}`)
+}
+
 //FINDVETS
 
 export const getAllVetsAPI = async() => {
   return await service.get('/allVets')
+}
+
+export const getBySpecialty = async (specialty) => {
+  return await service.get(`/vet/${specialty}`)
 }
 
 

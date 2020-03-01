@@ -4,7 +4,7 @@ const Appointment = require('../../../models/Appointment')
 
 exports.getUser = (req,res,next) => {
     let {id} = req.params
-    User.findById(id).populate('appointments').populate('pets').populate({
+     User.findById(id).populate('appointments').populate('pets').populate({
         path: 'pets',
         populate: {
             path: 'appointments',
@@ -13,7 +13,21 @@ exports.getUser = (req,res,next) => {
     }).then((user)=>{
         if(!user) return res.status(404).json({msg:'User not found, not logged in'})
         return res.status(200).json({ user })
-    }).catch(e=>console.log(e))
+    }).catch(e=>res.status(404).json({msg: e}))
+}
+
+exports.getLoggedUser = (req, res, next) => {
+    console.log(req.user._id)
+    //  User.findById(req.user._id).populate('appointments').populate('pets').populate({
+    //     path: 'pets',
+    //     populate: {
+    //         path: 'appointments',
+    //         model: 'Appointment'
+    //     }
+    // }).then((user)=>{
+    //     if(!user) return res.status(404).json({msg:'User not found, not logged in'})
+    //     return res.status(200).json({ user })
+    // }).catch(e=>res.status(404).json({msg: e}))
 }
 
 exports.editUser = async (req, res, next) => { //LISTO!
