@@ -11,11 +11,11 @@ class MyProvider extends Component{
         role: '',
         email: '',
         password: '',
-        phone: Number,
+        phone: '',
         address: {
           street: '',
           neighborhood: '',
-          code: Number
+          code: ''
         }
       },
       signupVet: {
@@ -23,11 +23,11 @@ class MyProvider extends Component{
         role: '',
         email: '',
         password: '',
-        phone: Number,
+        phone: '',
         address: {
           street: '',
           neighborhood: '',
-          code: Number
+          code: ''
         },
         studies: {
           cedula: '',

@@ -63,8 +63,8 @@ export default class MakeAppointment extends Component {
                   <Stack>
                       <Heading>Your veterinarian</Heading>
                       <Image src={vet.image} size='sm'/>
-                      {/* <p>{vet.name}</p> */}
-                      {/* <p>{vet.studies.specialty}</p> */}
+                      <p>{vet.name}</p>
+                      <p>{vet.studies}</p>
                   </Stack>
                   <Stack>
                   <Heading>Appointment</Heading>

@@ -2,9 +2,9 @@ const User = require('../../../models/User')
 const Pet = require('../../../models/Pet')
 const Appointment = require('../../../models/Appointment')
 
-exports.getUser = (req,res,next) => {
+exports.getUser = async (req,res,next) => {
     let {id} = req.params
-     User.findById(id).populate('appointments').populate('pets').populate({
+     await User.findById(id).populate('appointments').populate('pets').populate({
         path: 'pets',
         populate: {
             path: 'appointments',
@@ -16,18 +16,9 @@ exports.getUser = (req,res,next) => {
     }).catch(e=>res.status(404).json({msg: e}))
 }
 
-exports.getLoggedUser = (req, res, next) => {
-    console.log(req.user._id)
-    //  User.findById(req.user._id).populate('appointments').populate('pets').populate({
-    //     path: 'pets',
-    //     populate: {
-    //         path: 'appointments',
-    //         model: 'Appointment'
-    //     }
-    // }).then((user)=>{
-    //     if(!user) return res.status(404).json({msg:'User not found, not logged in'})
-    //     return res.status(200).json({ user })
-    // }).catch(e=>res.status(404).json({msg: e}))
+exports.logged = async (req, res, next) => {
+    let logged = await User.find(req.user._id).populate('pets').populate('appointments')
+    res.status(200).json({msg: 'LoggedUser', logged})
 }
 
 exports.editUser = async (req, res, next) => { //LISTO!

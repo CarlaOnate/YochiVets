@@ -15,31 +15,29 @@ import {
 
 
 const FormSubmit = ({signupInput, state, handleAddress, submit}) => {
-  let {signupForm: {name, email, password, phone, address}} = state
+  const {signupForm: {name, email, password, phone, address}} = state
     return (
-       <Box onSubmit={submit} as="form">
+       <Box onSubmit={submit}>
         <FormControl isRequired h={'100%'} justifyContent="spaceAround">
           <Heading>Signup</Heading>
               <FormLabel htmlFor="text">Full name</FormLabel>
               <Input onChange={(e) => signupInput(e, 'CLIENT')} value={name} name="name" type="text" placeholder="Full name"/>
 
-              <FormLabel htmlFor="email">Email</FormLabel>
+              <FormLabel>Email</FormLabel>
               <InputGroup>
-                <InputLeftAddon><Icon name="email"/></InputLeftAddon>
-                <Input onChange={(e) => signupInput(e, 'CLIENT')} value={email} name="email" type="email" placeholder="Email" />
+                <InputLeftAddon><Icon name={"email"}/></InputLeftAddon>
+                <Input onChange={(e) => signupInput(e, 'CLIENT')} value={email} name="email" type="text" placeholder="Email" />
               </InputGroup>
 
-              <FormLabel htmlFor="password">Password</FormLabel>
+              <FormLabel>Password</FormLabel>
               <InputGroup>
                 <InputLeftAddon><Icon name="password"/></InputLeftAddon>
                 <Input onChange={(e) => signupInput(e, 'CLIENT')} value={password} name="password" type="password" placeholder="Password" />
               </InputGroup>
 
-              <FormLabel htmlFor="number">Phone</FormLabel>
-              <InputGroup>
-              <InputLeftAddon><Icon name="phone"/></InputLeftAddon>
-                <Input onChange={(e) => signupInput(e, 'CLIENT')} value={phone} name="phone" type="number" placeholder="Phone number" />
-              </InputGroup>
+              <FormLabel>Phone</FormLabel>
+              <InputLeftAddon><Icon name={"phone"}/></InputLeftAddon>
+                <Input onChange={(e) => signupInput(e, 'CLIENT')} value={phone} name="phone" type={'number'} placeholder="Phone number" />
 
               <InputGroup h='100%'>
                 <Flex direction="column" h='100%'>
