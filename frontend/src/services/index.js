@@ -24,7 +24,7 @@ export const logout = async() => {
 }
 
 export const getLogged = async () => {
-  return await service.get('/client/logged')
+  return await service.get('/loggedUser')
 }
 
 export const getUser = async (id) => {

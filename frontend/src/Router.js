@@ -14,7 +14,7 @@ const Router = () => (
     <Navbar/>
     <Switch>
       <Route exact path="/" component={Home} />
-      <Route exact path="/client/signup" component={Auth}/>
+      <Route exact path="/signup" component={Auth}/>
       <Route exact path="/findVets" component={FindVets}/>
       <Route exact path="/profile" component={Profile}/>
       <Route exact path="/register-vet" component={SignupVet}/>

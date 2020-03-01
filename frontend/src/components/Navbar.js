@@ -31,7 +31,7 @@ const Navbar = () => {
              <NavLink exact to="/profile">Profile</NavLink>
              <Button onClick={context.logoutSubmit} size="sm">Logout</Button>
              </>) :
-             <NavLink exact to="/client/signup">Signup - Login</NavLink>}
+             <NavLink exact to="/signup">Signup - Login</NavLink>}
             </div>
         </Flex>)}}
     </MyContext.Consumer>
