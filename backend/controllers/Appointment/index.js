@@ -26,6 +26,15 @@ exports.getAppointment = async (req, res) => {
     res.status(200).json({appointment})
 }
 
+exports.clientAppointments = async (req, res) => {
+    const {id} = req.params
+    const appointments = await Appointment.find({client: id}).populate('pet').populate('vet')
+    if(!appointments){
+        return res.status(500).json({msg: 'Incorrect id'})
+    }
+    res.status(200).json({msg: 'Success', appointments})
+}
+
 exports.editAppointment = async (req, res) => {
     const {id} = req.params
     const {pet, date, location} = req.body

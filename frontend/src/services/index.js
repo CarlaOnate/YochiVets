@@ -47,8 +47,12 @@ export const getBySpecialty = async (specialty) => {
 
 //Create Appointment
 
-export const createAppointment = async (appointment) =>{
+export const createAppointment = async (appointment) => {
   return await service.post('/appointment', appointment)
+}
+
+export const getClientAppointments = async (id) => {
+  return await service.get(`/appointment/client/${id}`)
 }
 
 
