@@ -1,5 +1,5 @@
 import React from 'react'
-import { Heading, Button, Badge, Image, Avatar } from '@chakra-ui/core'
+import { Heading, Button, Badge, Avatar } from '@chakra-ui/core'
 import { Link } from 'react-router-dom'
 
 const VetCard = ({name, image, specialty, animal, id}) => {

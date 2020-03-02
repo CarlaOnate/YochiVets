@@ -11,7 +11,6 @@ export const signup = async (user) => {
   return await service.post('/signup', user)
 }
 export const signupVet = async (user) => {
-  console.log('vetSignup', user)
   return await service.post('/vet-signup', user)
 }
 
@@ -29,6 +28,11 @@ export const getLogged = async () => {
 
 export const getUser = async (id) => {
   return await service.get(`/client/${id}`)
+}
+
+export const updateUser = async (user) => {
+  console.log(user, 'SERVICE')
+  return await service.put(`/client/${user._id}`, user)
 }
 
 //FINDVETS

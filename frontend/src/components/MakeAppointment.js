@@ -130,6 +130,7 @@ export default class MakeAppointment extends Component {
         location: address
       }
       await createAppointment(appointment)
+      this.props.history.push('/profile')
     }
 
     render() {

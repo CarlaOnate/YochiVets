@@ -75,7 +75,6 @@ const SignupVet = () => {
             <FormLabel>Cedula Profesional</FormLabel>
                 <Input onChange={handleStudiesInput} value={studies.cedula} name="cedula" type="text" placeholder="ID number (cédula profesional)" />
                 <Stack spacing={3}>
-                {/* onChange={} value={}*/}
                   <RadioGroup name="specialty" key="0" onChange={handleStudiesInput} value={studies.specialty} isInline>
                     <Radio  key="1" value="General Medicine">General Medicine</Radio>
                     <Radio  key="2"  value="Behaviour">Behaviour</Radio>

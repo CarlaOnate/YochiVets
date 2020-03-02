@@ -21,11 +21,15 @@ exports.logged = async (req, res, next) => {
     res.status(200).json({msg: 'LoggedUser', logged})
 }
 
-exports.editUser = async (req, res, next) => { //LISTO!
+exports.editUser = async (req, res, next) => {
     const {id} = req.params
     const {email, name, address, studies} = req.body
-    const {secure_url } = req.file
-    await User.findByIdAndUpdate(id, {email, name, image: secure_url, address, studies})
+    if(req.file){
+        const {secure_url } = await req.file
+        await User.findByIdAndUpdate(id, {email, name, image: secure_url, address, studies})
+    } else {
+        await User.findByIdAndUpdate(id, {email, name, address, studies})
+    }
     let newUser = await User.findById(id)
     res.status(200).json({newUser})
 }
