@@ -51,6 +51,14 @@ exports.deleteAppointment = async (req, res) => {
     await User.findByIdAndUpdate(appointment.vet, {$pull: {appointments: appointment._id}})
     let pet = await Pet.findById(appointment.pet)
     let vet = await User.findById(appointment.vet)
+    let updatedUser = await User.findById(appointment.client).populate('appointments').populate('pets').populate({
+        path: 'pets',
+        populate: {
+            path: 'appointments',
+            model: 'Appointment'
+        }}
+    )
+    if(!updatedUser) res.status(404).json({msg: 'Client not found, incorrect id'})
     await Appointment.findByIdAndDelete(id)
-    res.status(200).json({pet, vet})
+    res.status(200).json({pet, vet, updatedUser})
 }

@@ -247,9 +247,11 @@ export default class Profile extends Component {
 
     deleteAppointment = async (e) => {
         const {name} = e.target
-        let {data} = await deleteAppointmentAPI(name)
-        this.setState({})
-        console.log(data)
+        let {data: {updatedUser}} = await deleteAppointmentAPI(name)
+        let {data: {appointments}} = await getClientAppointments(updatedUser._id)
+        console.log(this.state.user)
+        this.setState({user: updatedUser, pets: updatedUser.pets, appointments, editAppointment: false})
+        console.log(this.state.user)
     }
 
     render() {

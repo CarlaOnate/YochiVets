@@ -9,7 +9,7 @@ const PetCard = ({state, createPet, pets, user, createPetInput, petFormData, del
                     <>
                         <Heading>You have no pets</Heading>
                     </>
-                    ) :null }
+                    ) : null }
                     {createPet === false ? (
                         <Stack direction='row'>
                         {pets.map((el, index) => {
