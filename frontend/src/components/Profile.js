@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { Stack, Box, Image, List, ListItem, Avatar, Heading, Spinner, Button, FormControl,
-     FormLabel, Input, Flex, RadioGroup, Radio, Textarea, Icon, InputGroup} from '@chakra-ui/core'
+import { Stack, Heading, Spinner, Button } from '@chakra-ui/core'
 import { getLogged, getUser, updateUser, createPet, deletePet, getClientAppointments, getAppointment } from '../services'
 import { Link } from 'react-router-dom'
 import PetCard from './PetCard'

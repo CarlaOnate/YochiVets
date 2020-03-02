@@ -16,7 +16,7 @@ import {
     ListItem,
     InputGroup,
     Flex,
-    FormControl
+    FormControls
   } from '@chakra-ui/core'
 import { getUser, getLogged, createAppointment } from '../services'
 import { Link } from 'react-router-dom'
@@ -44,6 +44,7 @@ export default class MakeAppointment extends Component {
           date: '',
           minDate: ''
         },
+        time: String,
         spinner: true
     }
 
@@ -127,14 +128,20 @@ export default class MakeAppointment extends Component {
         vet: this.state.vet._id,
         pet: this.state.user.pets[ind]._id,
         date: this.state.dateInput.date,
+        time: this.state.time,
         location: address
       }
       await createAppointment(appointment)
       this.props.history.push('/profile')
     }
 
+    handleTimeInput = (e) => {
+      const { value} = e.target
+      this.setState({time: value})
+    }
+
     render() {
-        const {vet, user, petInput, addressInput, dateInput} = this.state
+        const {vet, user, petInput, addressInput, dateInput, time} = this.state
         if(Object.entries(user).length === 0){
           return(
               <Stack w='50%'>
@@ -185,12 +192,20 @@ export default class MakeAppointment extends Component {
                       <RadioGroup name="pet" onChange={this.handlePetInput} value={petInput.pet} isInline>
                         {user.pets.map((el, index) => {
                             return (
-                                <Radio key={index} value={el.name} >{el.name}</Radio>
+                                <Radio key={el._id} value={el.name} >{el.name}</Radio>
                             )
                         })}
                        </RadioGroup>
                        <FormLabel>When is the appointment?</FormLabel>
                        <Input onChange={this.handleDateInput} type='date' min={dateInput.minDate} name='date' value={dateInput.date}></Input>
+                       <RadioGroup name="time" onChange={this.handleTimeInput} value={time} isInline>
+                       <FormLabel>At what time?</FormLabel>
+                         {vet.availableHours.map(el => {
+                           return(
+                             <Radio key={el} value={el}>{el}</Radio>
+                           )
+                         })}
+                       </RadioGroup>
                        <FormLabel>Which location?</FormLabel>
                        <RadioGroup name="location" onChange={this.handleAddressInput} value={addressInput.location}>
                         <Radio value='clientAddress'>

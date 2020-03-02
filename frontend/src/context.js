@@ -147,6 +147,7 @@ class MyProvider extends Component{
     signupSubmit = async(e) => {
       e.preventDefault()
       const {data} = await signup(this.state.signupForm)
+      console.log(data)
       this.setState({showNav: true, user: data})
       this.props.history.push('/findVets')
     }

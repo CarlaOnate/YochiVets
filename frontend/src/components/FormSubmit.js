@@ -17,7 +17,7 @@ import {
 const FormSubmit = ({signupInput, state, handleAddress, submit}) => {
   const {signupForm: {name, email, password, phone, address}} = state
     return (
-       <Box onSubmit={submit}>
+       <Box as="form" onSubmit={submit}>
         <FormControl isRequired h={'100%'} justifyContent="spaceAround">
           <Heading>Signup</Heading>
               <FormLabel htmlFor="text">Full name</FormLabel>
