@@ -25,7 +25,7 @@ exports.editUser = async (req, res, next) => {
     const {id} = req.params
     const {email, name, address, studies} = req.body
     if(req.file){
-        const {secure_url } = await req.file
+        const { secure_url } = await req.file
         await User.findByIdAndUpdate(id, {email, name, image: secure_url, address, studies})
     } else {
         await User.findByIdAndUpdate(id, {email, name, address, studies})

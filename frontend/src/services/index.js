@@ -52,3 +52,8 @@ export const createAppointment = async (appointment) =>{
 }
 
 
+//PETS
+
+export const createPet = async (pet) => {
+  return await service.post('/pet', pet)
+}
