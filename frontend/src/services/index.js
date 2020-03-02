@@ -41,4 +41,10 @@ export const getBySpecialty = async (specialty) => {
   return await service.get(`/vet/${specialty}`)
 }
 
+//Create Appointment
+
+export const createAppointment = async (appointment) =>{
+  return await service.post('/appointment', appointment)
+}
+
 
