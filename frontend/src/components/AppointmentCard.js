@@ -1,10 +1,11 @@
 import React from 'react'
 import { Stack, Box, ListItem, Avatar, Heading, Button, List, Icon,
-    FormLabel, Input, Flex, RadioGroup, Radio, InputGroup} from '@chakra-ui/core'
+    FormLabel, Input, Flex, RadioGroup, Radio, InputGroup, EditableInput, FormControl} from '@chakra-ui/core'
 import { Link } from 'react-router-dom'
 
 
-const AppointmentCard = ({appointments, editAppointment, user, editAppointmentInput, onClickAppointment, onClickGoBackAppointment}) => {
+const AppointmentCard = ({appointments, editAppointment, user, editAppointmentInput, onClickAppointment, onClickGoBackAppointment,
+    handleInputsAppointment, handleOtherInputs, handleLocation, deleteAppointment}) => {
     return (
         <>
         {Object.entries(appointments).length === 0 ? (
@@ -15,7 +16,9 @@ const AppointmentCard = ({appointments, editAppointment, user, editAppointmentIn
             ) : editAppointment ?
             (
                 <>
-                  <RadioGroup name="pet" isInline>
+                <FormControl isRequired>
+                <FormLabel>Choose a pet</FormLabel>
+                  <RadioGroup onChange={handleInputsAppointment} name="pet" value={editAppointmentInput.pet} isInline>
                     {user.pets.map((el, index) => {
                         return (
                             <Radio key={index} value={el.name} >{el.name}</Radio>
@@ -23,9 +26,17 @@ const AppointmentCard = ({appointments, editAppointment, user, editAppointmentIn
                     })}
                    </RadioGroup>
                    <FormLabel>When is the appointment?</FormLabel>
-                   <Input type='date' name='date'></Input>
+                   <Input onChange={handleInputsAppointment} value={editAppointmentInput.date.slice(0,10)} name='date' type='date'></Input>
+                   <RadioGroup name="time" onChange={handleInputsAppointment} value={editAppointmentInput.time} isInline>
+                       <FormLabel>At what time?</FormLabel>
+                         {editAppointmentInput.hours.map(el => {
+                           return (
+                             <Radio key={el} value={el}>{el}</Radio>
+                           )
+                         })}
+                    </RadioGroup>
                    <FormLabel>Which location?</FormLabel>
-                   <RadioGroup name="location">
+                   <RadioGroup name="location" value={editAppointmentInput.location} onChange={handleLocation}>
                     <Radio value='clientAddress'>
                     <List styleType="disc">
                     {Object.entries(user.address).map((el, index) => {
@@ -35,7 +46,7 @@ const AppointmentCard = ({appointments, editAppointment, user, editAppointmentIn
                     })}
                     </List>
                     </Radio>
-                    <Radio value='Other'>Other</Radio>
+                    <Radio onChange={handleOtherInputs} value='Other'>Other</Radio>
                     {editAppointmentInput.addressInput.location === 'Other' ? (
                       <InputGroup h='100%'>
                        <Flex direction="column" h='100%'>
@@ -47,8 +58,12 @@ const AppointmentCard = ({appointments, editAppointment, user, editAppointmentIn
                       </InputGroup>
                     ) : null}
                    </RadioGroup>
+                   <Stack direction='row'>
                    <Button onClick={onClickGoBackAppointment} type='submit'>Go Back</Button>
-                   <Button type='submit'>Create Appointment</Button>
+                   <Button type='submit'>Update</Button>
+                   </Stack>
+                   </FormControl>
+
                 </>
             ) : (
                 <Stack direction="row">
@@ -58,14 +73,16 @@ const AppointmentCard = ({appointments, editAppointment, user, editAppointmentIn
                         <Box>
                         <Avatar src={el.vet.image}/>
                         <p>{el.vet.name}</p>
-                        {console.log(el)}
                         <p>{el.vet.studies.animal}</p>
                         <p>{el.vet.studies.sepcialty}</p>
                         </Box>
                         <Box>
-                            <p>Date: {el.date}</p>
+                            <p>Date: {el.date.slice(0, 9)}</p>
+                            {console.log(el)}
+                            <strong>Time: {el.time}</strong>
                         </Box>
                     <Button name={el._id} onClick={onClickAppointment} h='100%'><Icon name="view"/></Button>
+                    <Button name={el._id} onClick={deleteAppointment} h='100%'><Icon name="minus"/></Button>
                     </Stack>
                     )
                 })}

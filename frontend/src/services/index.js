@@ -35,6 +35,7 @@ export const updateUser = async (user) => {
   return await service.put(`/client/${user._id}`, user)
 }
 
+
 //FINDVETS
 
 export const getAllVetsAPI = async() => {
@@ -45,7 +46,7 @@ export const getBySpecialty = async (specialty) => {
   return await service.get(`/vet/${specialty}`)
 }
 
-//Create Appointment
+//Appointments
 
 export const createAppointment = async (appointment) => {
   return await service.post('/appointment', appointment)
@@ -57,6 +58,10 @@ export const getClientAppointments = async (id) => {
 
 export const getAppointment = async (id) => {
   return await service.get(`/appointment/${id}`)
+}
+
+export const deleteAppointmentAPI = async (id) => {
+  return await service.delete(`/appointment/${id}`)
 }
 
 

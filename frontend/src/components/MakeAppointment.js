@@ -16,7 +16,7 @@ import {
     ListItem,
     InputGroup,
     Flex,
-    FormControls
+    FormControl
   } from '@chakra-ui/core'
 import { getUser, getLogged, createAppointment } from '../services'
 import { Link } from 'react-router-dom'
@@ -44,7 +44,7 @@ export default class MakeAppointment extends Component {
           date: '',
           minDate: ''
         },
-        time: String,
+        time: '',
         spinner: true
     }
 

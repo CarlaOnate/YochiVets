@@ -3,10 +3,10 @@ const User = require('../../models/User')
 const Pet = require('../../models/Pet')
 
 exports.createAppointment = async(req, res, next) => {
-    const {client, pet, vet, date, location} = req.body
-    let newAppointment = await Appointment.create({client, pet, vet, date, location})
+    const {client, pet, vet, date, location, time} = req.body
+    let newAppointment = await Appointment.create({client, pet, vet, date, location, time})
     if(!newAppointment) return res.status(500).json({msg: 'An error ocurred creating the appointment'})
-    await Pet.findByIdAndUpdate(pet, {$push: {appointments: newAppointment._id}})
+    await Pet.findByIdAndUpdate(pet, {$push: {appointments: newAppointment._id}})   
     await User.findByIdAndUpdate(vet, {$push: {appointments: newAppointment._id}})
     res.status(200).json({newAppointment})
 }

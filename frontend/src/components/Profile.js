@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Stack, Heading, Spinner, Button } from '@chakra-ui/core'
-import { getLogged, getUser, updateUser, createPet, deletePet, getClientAppointments, getAppointment } from '../services'
+import { getLogged, getUser, updateUser, createPet, deletePet, getClientAppointments, getAppointment,
+deleteAppointmentAPI } from '../services'
 import { Link } from 'react-router-dom'
 import PetCard from './PetCard'
 import UserProfile from './UserProfile'
@@ -32,6 +33,7 @@ export default class Profile extends Component {
             client: '',
             vet: '',
             pet: '',
+            date: '',
             addressInput: {
                 location: '',
                 other: {
@@ -39,7 +41,9 @@ export default class Profile extends Component {
                   neighborhood: '',
                   code: ''
                 }
-            }
+            },
+            time: '',
+            hours: ''
         }
     }
 
@@ -161,6 +165,7 @@ export default class Profile extends Component {
                     client: appointment.client._id,
                     vet: appointment.vet._id,
                     pet: appointment.pet.name,
+                    date: appointment.date,
                     addressInput: {
                         location: appointment.location,
                         other: {
@@ -168,10 +173,12 @@ export default class Profile extends Component {
                           neighborhood: appointment.other.neighborhood,
                           code: appointment.other.code
                         }
-                    }
+                    },
+                    time: appointment.vet.availableHours,
+                    hours: appointment.vet.availableHours
                 }
             }))
-        }else  {
+        } else  {
             this.setState(prevState => ({
                 ...prevState,
                 editAppointment: !this.state.editAppointment,
@@ -179,16 +186,70 @@ export default class Profile extends Component {
                     client: appointment.client._id,
                     vet: appointment.vet._id,
                     pet: appointment.pet.name,
+                    date: appointment.date,
                     addressInput: {
                         location: appointment.location,
-                    }
+                    },
+                    time: appointment.vet.time,
+                    hours: appointment.vet.availableHours
                 }
             }))
         }
+        console.log(this.state.editAppointmentInput)
     }
 
     onClickGoBackAppointment = (e) => {
         this.setState({editAppointment: !this.state.editAppointment})
+    }
+
+    handleEditAppointmentInputs = (e) => {
+        const { name, value } = e.target
+        this.setState(prevState => ({
+            ...prevState,
+            editAppointmentInput: {
+                ...prevState.editAppointmentInput,
+                [name]: value
+            }
+        }))
+    }
+
+    handleAppointmentAddressEditInputs = (e) => {
+        const {name, value} = e.target
+        console.log(name, value)
+        this.setState(prevState => ({
+            ...prevState,
+            editAppointmentInput: {
+                ...prevState.editAppointmentInput,
+                addressInput: {
+                    ...prevState.editAppointmentInput.addressInput,
+                    [name]: value
+                }
+            }
+        }))
+    }
+
+    handleAppointmentOtherAddressInputs = (e) => {
+        const {name, value} = e.target
+        this.setState(prevState => ({
+            ...prevState,
+            editAppointmentInput: {
+                ...prevState.editAppointmentInput,
+                addressInput: {
+                    ...prevState.editAppointmentInput.addressInput,
+                    other: {
+                        ...prevState.editAppointmentInput.addressInput.other,
+                        [name]: value
+                    }
+                }
+            }
+        }))
+    }
+
+    deleteAppointment = async (e) => {
+        const {name} = e.target
+        let {data} = await deleteAppointmentAPI(name)
+        this.setState({})
+        console.log(data)
     }
 
     render() {
@@ -222,8 +283,10 @@ export default class Profile extends Component {
                     <PetCard state={this.state} createPet={createPet} pets={pets} user={user} createPetInput={createPetInput} petFormData={petFormData}
                     deletePet={this.deletePet} handleCreatePetInput={this.handleCreatePetInput} onClickCreatePetButton={this.onClickCreatePetButton} createPetSubmit={this.createPetSubmit}/>
                 <Heading>Appointments</Heading>
-                <AppointmentCard appointments={appointments} editAppointment={editAppointment} user={user} editAppointmentInput={editAppointmentInput} 
-                onClickAppointment={this.onClickAppointment} onClickGoBackAppointment={this.onClickGoBackAppointment}/>
+                <AppointmentCard appointments={appointments} editAppointment={editAppointment} user={user} editAppointmentInput={editAppointmentInput}
+                onClickAppointment={this.onClickAppointment} onClickGoBackAppointment={this.onClickGoBackAppointment} handleInputsAppointment={this.handleEditAppointmentInputs}
+                handleOtherInputs={this.handleAppointmentOtherAddressInputs} handleLocation={this.handleAppointmentAddressEditInputs} deleteAppointment={this.deleteAppointment}
+                />
                 </Stack>
                 </Stack>
                 </>
