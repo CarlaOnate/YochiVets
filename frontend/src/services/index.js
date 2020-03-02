@@ -57,3 +57,7 @@ export const createAppointment = async (appointment) =>{
 export const createPet = async (pet) => {
   return await service.post('/pet', pet)
 }
+
+export const deletePet = async (id) => {
+  return await service.delete(`/pet/${id}`)
+}

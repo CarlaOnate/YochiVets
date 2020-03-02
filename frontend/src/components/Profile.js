@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Stack, Box, Image, List, ListItem, Avatar, Heading, Spinner, Button, FormControl, FormLabel, Input, Flex, RadioGroup, Radio, Textarea } from '@chakra-ui/core'
-import { getLogged, getUser, updateUser, createPet } from '../services'
+import { Stack, Box, Image, List, ListItem, Avatar, Heading, Spinner, Button, FormControl, FormLabel, Input, Flex, RadioGroup, Radio, Textarea, Icon } from '@chakra-ui/core'
+import { getLogged, getUser, updateUser, createPet, deletePet } from '../services'
 import { Link } from 'react-router-dom'
 
 
@@ -110,13 +110,19 @@ export default class Profile extends Component {
         }
         let {data} = await createPet(newPet)
         this.setState({createPet: false, user: data.user, pets: data.user.pets})
-        console.log(data, data.user, data.user.pets)
+    }
+
+    deletePet = async (e) => {
+        const {name} = e.target
+        let {data} = await deletePet(name)
+        this.setState({user: data.updatedUser})
+        console.log(data)
     }
 
 
     render() {
         console.log(this.state)
-        const {user, pets, edit, editInput, petFormData, createPetInput} = this.state
+        const {user, pets, edit, editInput, petFormData, createPetInput, createPet} = this.state
         if(Object.entries(user).length === 0){
             return(
             <>
@@ -182,21 +188,23 @@ export default class Profile extends Component {
                     {user.pets.length === 0 ? (
                     <>
                         <Heading>You have no pets</Heading>
-                        <Button onClick={this.onClickCreatePetButton} m={3}>Create pets</Button>
                     </>
-                    ) : this.state.createPet === false ? (
-                        <>
+                    ) : createPet === false ? (
+                        <Stack direction='row'>
                         {pets.map((el, index) => {
                             return (
-                        <Stack key={el._id} justify='row'>
+                        <Stack key={el._id} >
                         <Avatar key={el.image} src={el.image}></Avatar>
                         <p key={el.name}>{el.name}: {el.age} years</p>
-                        <Button key={el.index}>Edit Pet, MSF</Button>
+                        <Stack direction="row">
+                        <Button key={el.index}><Icon name="view" m={2}/> MSF</Button>
+                        <Button name={el._id} onClick={this.deletePet} key={el.index}><Icon name="minus" m={2}/></Button>
+                        </Stack>
                         </Stack>
                             )
                         })}
-                        </>
-                    ): (
+                        </Stack>
+                    ) : (
                         <Box as="form" onSubmit={this.createPetSubmit}>
                         <FormControl isRequired>
                             <FormLabel>Type in your pet's information</FormLabel>
@@ -227,7 +235,7 @@ export default class Profile extends Component {
                     {this.state.createPet ? (
                         <Button onClick={this.onClickCreatePetButton} m={3}>Back</Button>
                     ) : (
-                        <Button onClick={this.onClickCreatePetButton} m={3}>New Pet</Button>
+                        <Button onClick={this.onClickCreatePetButton} m={3}><Icon name="add" m={2}/> New Pet</Button>
                     )}
                 </Stack>
                 </Stack>

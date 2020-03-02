@@ -8,7 +8,13 @@ exports.createPet = async (req, res) => {
     if(!newPet) return res.status(500).json({msg: 'An error ocurred creating your pet'})
     const {pets, _id} = req.user
     await User.findByIdAndUpdate(_id, {pets: [...pets, newPet]})
-    const user = await User.findById(_id)
+    const user = await User.findById(_id).populate('appointments').populate('pets').populate({
+        path: 'pets',
+        populate: {
+            path: 'appointments',
+            model: 'Appointment'
+        }
+    })
     res.status(200).json({user, newPet})
 }
 
@@ -36,5 +42,12 @@ exports.deletePet = async (req, res, next) => {
     user.pets.splice(user.pets.indexOf(pet._id), 1)
     await User.findByIdAndUpdate(req.user._id, {pets: user.pets})
     await Pet.findByIdAndDelete(id)
-    res.status(200).json({msg: `Dear ${petName} rest in pet heaven );`})
+    const updatedUser = await User.findById(req.user._id).populate('appointments').populate('pets').populate({
+        path: 'pets',
+        populate: {
+            path: 'appointments',
+            model: 'Appointment'
+        }
+    })
+    res.status(200).json({msg: `Dear ${petName} rest in pet heaven );`, updatedUser})
 }
