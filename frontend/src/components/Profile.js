@@ -8,6 +8,7 @@ export default class Profile extends Component {
     state = {
         user: {},
         pets: {},
+        appointments: {},
         edit: false,
         editInput: {},
         createPet: false,
@@ -189,7 +190,8 @@ export default class Profile extends Component {
                     <>
                         <Heading>You have no pets</Heading>
                     </>
-                    ) : createPet === false ? (
+                    ) :null }
+                    {createPet === false ? (
                         <Stack direction='row'>
                         {pets.map((el, index) => {
                             return (
@@ -238,6 +240,9 @@ export default class Profile extends Component {
                         <Button onClick={this.onClickCreatePetButton} m={3}><Icon name="add" m={2}/> New Pet</Button>
                     )}
                 </Stack>
+                </Stack>
+                <Heading>Appointments</Heading>
+                <Stack>
                 </Stack>
                 </>
             )
