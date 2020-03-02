@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { Stack, Box, Image, List, ListItem, Avatar, Heading, Spinner, Button, FormControl, FormLabel, Input, Flex, RadioGroup, Radio, Textarea, Icon } from '@chakra-ui/core'
-import { getLogged, getUser, updateUser, createPet, deletePet, getClientAppointments } from '../services'
+import { Stack, Box, Image, List, ListItem, Avatar, Heading, Spinner, Button, FormControl,
+     FormLabel, Input, Flex, RadioGroup, Radio, Textarea, Icon, InputGroup} from '@chakra-ui/core'
+import { getLogged, getUser, updateUser, createPet, deletePet, getClientAppointments, getAppointment } from '../services'
 import { Link } from 'react-router-dom'
 
 
@@ -10,6 +11,7 @@ export default class Profile extends Component {
         pets: {},
         appointments: {},
         edit: false,
+        editAppointment: false,
         editInput: {},
         createPet: false,
         petFormData: {
@@ -23,6 +25,19 @@ export default class Profile extends Component {
             sex: '',
             breed: '',
             sterilized: ''
+        },
+        editAppointmentInput: {
+            client: '',
+            vet: '',
+            pet: '',
+            addressInput: {
+                location: '',
+                other: {
+                  street: '',
+                  neighborhood: '',
+                  code: ''
+                }
+            }
         }
     }
 
@@ -133,10 +148,51 @@ export default class Profile extends Component {
         this.setState({user: data.updatedUser, pets: data.updatedUser.pets})
     }
 
+    onClickAppointment = async (e) => {
+        const {name} = e.target
+        let {data: {appointment}} = await getAppointment(name)
+        if(appointment.location === 'Other'){
+            this.setState(prevState => ({
+                ...prevState,
+                editAppointment: !this.state.editAppointment,
+                editAppointmentInput:{
+                    client: appointment.client._id,
+                    vet: appointment.vet._id,
+                    pet: appointment.pet.name,
+                    addressInput: {
+                        location: appointment.location,
+                        other: {
+                          street: appointment.other.street,
+                          neighborhood: appointment.other.neighborhood,
+                          code: appointment.other.code
+                        }
+                    }
+                }
+            }))
+        }else  {
+            this.setState(prevState => ({
+                ...prevState,
+                editAppointment: !this.state.editAppointment,
+                editAppointmentInput:{
+                    client: appointment.client._id,
+                    vet: appointment.vet._id,
+                    pet: appointment.pet.name,
+                    addressInput: {
+                        location: appointment.location,
+                    }
+                }
+            }))
+        }
+    }
+
+    onClickGoBackAppointment = (e) => {
+        this.setState({editAppointment: !this.state.editAppointment})
+    }
 
     render() {
         console.log(this.state, this.state.appointments)
-        const {user, pets, appointments, edit, editInput, petFormData, createPetInput, createPet} = this.state
+        const {user, pets, appointments, edit, editInput, petFormData, createPetInput,
+            createPet, editAppointment, editAppointmentInput} = this.state
         if(Object.entries(user).length === 0){
             return(
             <>
@@ -260,19 +316,65 @@ export default class Profile extends Component {
                     <Heading>You have no appointments</Heading>
                     <Link to="/findVets"><Button>Create one</Button></Link>
                 </>
+                ) : editAppointment ?
+                (
+                    <>
+                      <RadioGroup name="pet" isInline>
+                        {user.pets.map((el, index) => {
+                            return (
+                                <Radio key={index} value={el.name} >{el.name}</Radio>
+                            )
+                        })}
+                       </RadioGroup>
+                       <FormLabel>When is the appointment?</FormLabel>
+                       <Input type='date' name='date'></Input>
+                       <FormLabel>Which location?</FormLabel>
+                       <RadioGroup name="location">
+                        <Radio value='clientAddress'>
+                        <List styleType="disc">
+                        {Object.entries(user.address).map((el, index) => {
+                          return (
+                          <ListItem key={index}>{el[0].charAt(0).toUpperCase()}{el[0].slice(1, el[0].length)} : {el[1]}</ListItem>
+                          )
+                        })}
+                        </List>
+                        </Radio>
+                        <Radio value='Other'>Other</Radio>
+                        {editAppointmentInput.addressInput.location === 'Other' ? (
+                          <InputGroup h='100%'>
+                           <Flex direction="column" h='100%'>
+                             <FormLabel htmlFor="text" >Address</FormLabel>
+                             <Input name="street" type="text" placeholder="Street" />
+                             <Input name="neighborhood" type="text" placeholder="Neighborhood" />
+                             <Input name="code" type="number" placeholder="Postal code" />
+                           </Flex>
+                          </InputGroup>
+                        ) : null}
+                       </RadioGroup>
+                       <Button onClick={this.onClickGoBackAppointment} type='submit'>Go Back</Button>
+                       <Button type='submit'>Create Appointment</Button>
+                    </>
                 ) : (
                     <Stack direction="row">
                     {appointments.map(el => {
                         return (
-                        <Stack>
-                            <p>{el.date}</p>
+                        <Stack direction="row">
+                            <Box>
+                            <Avatar src={el.vet.image}/>
+                            <p>{el.vet.name}</p>
+                            {console.log(el)}
+                            <p>{el.vet.studies.animal}</p>
+                            <p>{el.vet.studies.sepcialty}</p>
+                            </Box>
+                            <Box>
+                                <p>Date: {el.date}</p>
+                            </Box>
+                        <Button name={el._id} onClick={this.onClickAppointment} h='100%'><Icon name="view"/></Button>
                         </Stack>
                         )
                     })}
                     </Stack>
                 )}
-                <Stack>
-                </Stack>
                 </>
             )
         }

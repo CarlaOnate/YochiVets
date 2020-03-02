@@ -55,6 +55,10 @@ export const getClientAppointments = async (id) => {
   return await service.get(`/appointment/client/${id}`)
 }
 
+export const getAppointment = async (id) => {
+  return await service.get(`/appointment/${id}`)
+}
+
 
 //PETS
 
