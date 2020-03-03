@@ -19,19 +19,16 @@ const Navbar = () => {
     <MyContext.Consumer>
     {context => {
         return (
-        <Flex as="nav" justify='space-between' direction='row' style={navStyle}>
-            <div>
-                {/* logo */}
-            </div>
+        <Flex as="nav" justify='flex-end' direction='row' style={navStyle}>
             <div style={linkStyle}>
             <NavLink exact to="/"><Button variantColor="blue" size='sm'>Home</Button></NavLink>
-            <NavLink exact to="/findVets" bg=''>Find Vets</NavLink>
+            <NavLink exact to="/findVets" bg=''><Button size="sm">Find Vets</Button></NavLink>
             {context.state.showNav ? (
             <>
              <NavLink exact to="/profile">Profile</NavLink>
-             <Button onClick={context.logoutSubmit} size="sm">Logout</Button>
+             <Button rightIcon='arrow' variantColor="red" variant="outline" onClick={context.logoutSubmit} size="sm">Logout</Button>
              </>) :
-             <NavLink exact to="/signup">Signup - Login</NavLink>}
+             <NavLink exact to="/signup"><Button variantColor="blue" variant="outline" size="sm">Signup - Login</Button></NavLink>}
             </div>
         </Flex>)}}
     </MyContext.Consumer>
