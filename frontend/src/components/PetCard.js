@@ -1,5 +1,5 @@
 import React from 'react'
-import { Stack, Box, Avatar, Heading, Button, FormControl, Flex, Image,
+import { Stack, Box, Heading, Button, FormControl, Flex, Image,
     FormLabel, Input, RadioGroup, Radio, Textarea, Icon, Text} from '@chakra-ui/core'
 import EditPet from './EditPet'
 
@@ -44,16 +44,16 @@ const PetCard = ({state, createPet, pets, user, createPetInput, petFormData, del
                         <EditPet editButton={editButton} inputs={editInputs} formData={formData} goBackPet={goBackEdit} handle={handleInputsEdit} submit={editSubmit}/>
                         </>
                     ) : (
-                        <Stack direction='row'>
-                            {pets.map((el, index) => {
+                        <Stack direction='column'>
+                            {pets.map(el => {
                                 return (
-                            <Stack key={el._id} justify="center" align="center" p={2} border='.5px solid rgba(198,198,198,.5)' borderRadius="10px">
-                                <Image key={el.image} src={el.image} size="100px" objectFit="cover"/>
-                                <Flex align="center">
+                            <Stack key={el._id} justify="space-around" align="center" direction="row" p={2} border='.5px solid rgba(198,198,198,.5)' borderRadius="10px">
+                                <Image key={el.image} src={el.image} size="70px" mr={2} objectFit="cover"/>
+                                <Flex align="center" direction="column">
                                  <Heading as="h5" fontSize="sm" pr={2} key={el.name}>{el.name.toUpperCase()}</Heading>
                                  <Text>{el.age} years</Text>
                                 </Flex>
-                                <Stack direction="row">
+                                <Stack direction="column">
                                 <Button key={el.index} name={el._id} onClick={editButton} size="sm" variantColor="cyan"><Icon name="edit" m={2}/></Button>
                                 <Button name={el._id} onClick={deletePet} key={el.index} size="sm" variantColor="red"><Icon name="minus" m={2}/></Button>
                                 </Stack>
@@ -65,7 +65,7 @@ const PetCard = ({state, createPet, pets, user, createPetInput, petFormData, del
                     {state.createPet ? (
                         <Button onClick={onClickCreatePetButton} m={3}>Back</Button>
                     ) : (
-                        <Button onClick={onClickCreatePetButton} m={3} size="sm" w='100%'><Icon name="add" m={2}/> New Pet</Button>
+                        <Button onClick={onClickCreatePetButton} mt={3} size="sm" w='100%'><Icon name="add" m={2}/> New Pet</Button>
                     )}
                 </Stack>
     )
