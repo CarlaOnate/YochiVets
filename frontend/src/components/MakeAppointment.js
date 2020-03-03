@@ -16,10 +16,14 @@ import {
     ListItem,
     InputGroup,
     Flex,
-    FormControl
+    FormControl,
+    Text,
+    Tag,
+    ListIcon
   } from '@chakra-ui/core'
 import { getUser, getLogged, createAppointment } from '../services'
 import { Link } from 'react-router-dom'
+import Unauthorized from './Unauthorized'
 
 
 
@@ -45,7 +49,15 @@ export default class MakeAppointment extends Component {
           minDate: ''
         },
         time: '',
-        spinner: true
+        spinner: true,
+        colors: {
+          'General Medicine': 'blue.600',
+          'Behaviour': 'teal.600',
+          'Cardiology': 'red.600',
+          'Neurology': 'purple.600',
+          'Oncology': 'pink.600',
+          'Nutrition': 'orange.600'
+      }
     }
 
     componentDidMount = async () => {
@@ -140,14 +152,21 @@ export default class MakeAppointment extends Component {
       this.setState({time: value})
     }
 
+
+    chooseColor = (specialty) => {
+    for(const key in this.state.colors){
+        if (key === specialty) return this.state.colors[key]
+    }
+    }
+
+
     render() {
         const {vet, user, petInput, addressInput, dateInput, time} = this.state
         if(Object.entries(user).length === 0){
           return(
-              <Stack w='50%'>
-              <Alert>Please login to do this</Alert>
-              <Link to="/signup"><Button>Login</Button></Link>
-              </Stack>
+            <Box>
+            <Unauthorized msg={'make an appointment'}/>
+            </Box>
           )
         } else if(Object.entries(vet).length === 0){
           return(
@@ -162,21 +181,37 @@ export default class MakeAppointment extends Component {
         } else {
           return (
               <>
-                  <Heading>Make an Appointment</Heading>
+                  <Heading as="h3" size="md">Make an Appointment</Heading>
                   <Stack direction="row" justify="space-around">
-                    <Stack>
-                        <Heading>Your veterinarian</Heading>
-                        <Image src={vet.image} size='sm'/>
-                        <p>{vet.name}</p>
-                        <p>{vet.studies.specialty}</p>
-                        <p>{vet.studies.animal}</p>
-                        <p>{vet.studies.cedula}</p>
-                        <p>{vet.studies.university}</p>
+                    <Stack justify="center" align="center">
+                        <Heading size="lg">Your veterinarian</Heading>
+                        <Box justify="center" align="center" borderWidth="1px" rounded="lg" overflow="hidden"  h="70vh">
+                          <Box p="2" fontSize="sm" letterSpacing="wide" color="white" height="15%"  backgroundColor={this.chooseColor(vet.studies.specialty)} >
+                          <Heading as="h3" size="lg" color="white">{vet.specialty}</Heading>
+                          </Box>
+                          <Stack justify="center" align="center" p="2">
+                          <Heading as="h4" size="md" color="gray.700">{vet.name}</Heading>
+                          <Image src={vet.image} w="12%" pb={7}/>
+                          </Stack>
+                          <Tag variantColor="gray">{vet.studies.specialty}</Tag>
+                          <Text p="2" fontSize="md">{vet.studies.animal}</Text>
+                          <Text p="2" fontSize="md">{vet.address.neighborhood}</Text>
+                          <Text fontSize="lg">Available Hours: </Text>
+                          <List>
+                          {this.state.vet.availableHours.map(el => (
+                            <ListItem isInline>
+                              <ListIcon key={el} icon="time" color="green.500" />
+                              {el}
+                            </ListItem>
+                          ))}
+                          </List>
+                        </Box>
                     </Stack>
 
-                    <Stack>
-                    <Heading>Appointment</Heading>
+                  <Stack h="70vh">
+                    <Heading size="lg">Appointment</Heading>
                     <Box onSubmit={this.appointmentSubmit} as="form" isRequired>
+                    <Flex justify="space-around" align="center">
                     <FormControl isRequired>
                       <FormLabel>Choose which pet needs the appointment</FormLabel>
                       {user.pets.length === 0 ? (
@@ -190,9 +225,9 @@ export default class MakeAppointment extends Component {
                     ) : (
                       <>
                       <RadioGroup name="pet" onChange={this.handlePetInput} value={petInput.pet} isInline>
-                        {user.pets.map((el, index) => {
+                        {user.pets.map(el => {
                             return (
-                                <Radio key={el._id} value={el.name} >{el.name}</Radio>
+                                <Radio key={el.name} value={el.name} >{el.name}</Radio>
                             )
                         })}
                        </RadioGroup>
@@ -202,7 +237,7 @@ export default class MakeAppointment extends Component {
                        <FormLabel>At what time?</FormLabel>
                          {vet.availableHours.map(el => {
                            return(
-                             <Radio key={el} value={el}>{el}</Radio>
+                             <Radio key={vet._id} value={el}>{el}</Radio>
                            )
                          })}
                        </RadioGroup>
@@ -233,9 +268,10 @@ export default class MakeAppointment extends Component {
                        </>
                     )}
                       </FormControl>
+                      </Flex>
                       </Box>
                     </Stack>
-                </Stack>
+                  </Stack>
               </>
               )
         }

@@ -22,11 +22,11 @@ const Navbar = () => {
         <Flex as="nav" justify='flex-end' direction='row' style={navStyle}>
             <div style={linkStyle}>
             <NavLink exact to="/"><Button variantColor="blue" size='sm'>Home</Button></NavLink>
-            <NavLink exact to="/findVets" bg=''><Button size="sm">Find Vets</Button></NavLink>
+            <NavLink exact to="/findVets" bg=''><Button size="sm" variant="link">Find Vets</Button></NavLink>
             {context.state.showNav ? (
             <>
-             <NavLink exact to="/profile">Profile</NavLink>
-             <Button rightIcon='arrow' variantColor="red" variant="outline" onClick={context.logoutSubmit} size="sm">Logout</Button>
+             <NavLink exact to="/profile"><Button variant="link">Profile</Button></NavLink>
+             <Button variantColor="red" variant="outline" onClick={context.logoutSubmit} size="sm">Logout</Button>
              </>) :
              <NavLink exact to="/signup"><Button variantColor="blue" variant="outline" size="sm">Signup - Login</Button></NavLink>}
             </div>

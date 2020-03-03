@@ -7,7 +7,6 @@ import PetCard from './PetCard'
 import UserProfile from './UserProfile'
 import AppointmentCard from './AppointmentCard'
 
-
 export default class Profile extends Component {
     state = {
         user: {},
@@ -363,23 +362,25 @@ export default class Profile extends Component {
             return (
                 <>
                 <Heading>Hello {user.name}</Heading>
-                <Stack direction='row' justify='space-around'>
-                <UserProfile user={user} editInput={editInput} handleEditUserInputs={this.handleEditUserInputs} editProfile={this.editProfile}
-                 editSubmit={this.editSubmit} goBackEdit={this.goBackEdit} edit={edit} handleAddressEditInputs={this.handleAddressEditInputs}
-                />
-                <Stack direction='column'>
-                <Heading>Your Pets</Heading>
-                    <PetCard state={this.state} createPet={createPet} pets={pets} user={user} createPetInput={createPetInput} petFormData={petFormData}
-                    deletePet={this.deletePet} handleCreatePetInput={this.handleCreatePetInput} onClickCreatePetButton={this.onClickCreatePetButton} createPetSubmit={this.createPetSubmit}
-                    edit={editPet} editButton={this.editPetButton} editInputs={editPetInputs} formData={petFormData} goBackEdit={this.goBackPetEdit} handleInputsEdit={this.handleEditPetInputs}
-                    editSubmit={this.editPetSubmit}/>
-                <Heading>Appointments</Heading>
-                <AppointmentCard appointments={appointments} editAppointment={editAppointment} user={user} editAppointmentInput={editAppointmentInput}
-                onClickAppointment={this.onClickAppointment} onClickGoBackAppointment={this.onClickGoBackAppointment} handleInputsAppointment={this.handleEditAppointmentInputs}
-                handleOtherInputs={this.handleAppointmentOtherAddressInputs} handleLocation={this.handleAppointmentAddressEditInputs} deleteAppointment={this.deleteAppointment}
-                />
-                </Stack>
-                </Stack>
+                    <Stack direction='row' justify='space-around'>
+                        <Stack w="30%" justifyContent="center">
+                            <UserProfile user={user} editInput={editInput} handleEditUserInputs={this.handleEditUserInputs} editProfile={this.editProfile}
+                             editSubmit={this.editSubmit} goBackEdit={this.goBackEdit} edit={edit} handleAddressEditInputs={this.handleAddressEditInputs}
+                            />
+                        </Stack>
+                        <Stack direction='column'>
+                        <Heading>Your Pets</Heading>
+                            <PetCard state={this.state} createPet={createPet} pets={pets} user={user} createPetInput={createPetInput} petFormData={petFormData}
+                            deletePet={this.deletePet} handleCreatePetInput={this.handleCreatePetInput} onClickCreatePetButton={this.onClickCreatePetButton} createPetSubmit={this.createPetSubmit}
+                            edit={editPet} editButton={this.editPetButton} editInputs={editPetInputs} formData={petFormData} goBackEdit={this.goBackPetEdit} handleInputsEdit={this.handleEditPetInputs}
+                            editSubmit={this.editPetSubmit}/>
+                        <Heading>Appointments</Heading>
+                        <AppointmentCard appointments={appointments} editAppointment={editAppointment} user={user} editAppointmentInput={editAppointmentInput}
+                        onClickAppointment={this.onClickAppointment} onClickGoBackAppointment={this.onClickGoBackAppointment} handleInputsAppointment={this.handleEditAppointmentInputs}
+                        handleOtherInputs={this.handleAppointmentOtherAddressInputs} handleLocation={this.handleAppointmentAddressEditInputs} deleteAppointment={this.deleteAppointment}
+                        />
+                        </Stack>
+                    </Stack>
                 </>
             )
         }

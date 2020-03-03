@@ -1,6 +1,6 @@
 import React from 'react'
 import { Stack, Box, Image, List, ListItem, Heading, Button, FormControl,
-    FormLabel, Input, Flex } from '@chakra-ui/core'
+    FormLabel, Input, Flex, Text, ListIcon } from '@chakra-ui/core'
 
 const UserProfile = ({user, edit, editInput, handleEditUserInputs, handleAddressEditInputs, editProfile, editSubmit, goBackEdit}) => {
     return (
@@ -10,15 +10,33 @@ const UserProfile = ({user, edit, editInput, handleEditUserInputs, handleAddress
             <Box p={5} textAlign='center'>
             <Image src={user.image} w='40%' m={0}/>
             <List>
-                <ListItem><Heading>Name:</Heading> {user.name}</ListItem>
-                <ListItem><Heading>Email:</Heading> {user.email}</ListItem>
-                <ListItem><Heading>Phone:</Heading> {user.phone}</ListItem>
-                <Heading>Address: </Heading>
-                {Object.entries(user.address).map((el, index) => {
-                  return (
-                    <ListItem key={index}>{el[0].charAt(0).toUpperCase()}{el[0].slice(1, el[0].length)} : {el[1]}</ListItem>
-                  )
-                })}
+                <ListItem>
+                    <Flex direction="row" align="center">
+                        <Heading as="h6" size="sm">NAME:</Heading><Text> {user.name}</Text>
+                    </Flex>
+                </ListItem>
+                <ListItem>
+                    <Flex direction="row" align="center">
+                        <Heading as="h6" size="sm">EMAIL:</Heading>
+                        <Text>{user.email}</Text>
+                    </Flex>
+                </ListItem>
+                <ListItem>
+                <Flex direction="row" align="center">
+                    <Heading as="h6" size="sm">PHONE:</Heading>
+                    <Text>{user.phone}</Text>
+                </Flex>
+                </ListItem>
+                <Flex align="center" direction="column">
+                     <Heading as="h6" size="sm">ADDRESS: </Heading>
+                        <Flex align="center" direction="column">
+                        {Object.entries(user.address).map((el, index) => {
+                          return (
+                            <ListItem key={index}>{el[0].charAt(0).toUpperCase()}{el[0].slice(1, el[0].length)} : {el[1]}</ListItem>
+                          )
+                        })}
+                        </Flex>
+                </Flex>
             </List>
             <Button onClick={editProfile}>Edit Profile</Button>
             </Box>
@@ -30,7 +48,7 @@ const UserProfile = ({user, edit, editInput, handleEditUserInputs, handleAddress
             <Image src={user.image} w='40%' m={0}/>
             <Input onChange={handleEditUserInputs} type='file' name='image'/>
             <List>
-                <ListItem><Heading>Name:</Heading><Input  onChange={handleEditUserInputs} name='name' value={editInput.name}/></ListItem>
+                <ListItem><Heading >Name:</Heading><Input  onChange={handleEditUserInputs} name='name' value={editInput.name}/></ListItem>
                 <ListItem><Heading>Email:</Heading><Input onChange={handleEditUserInputs} name='email' value={editInput.email}/></ListItem>
                 <ListItem><Heading>Phone:</Heading><Input onChange={handleEditUserInputs} name='phone' value={editInput.phone}/></ListItem>
                 <Flex direction="column" h='100%'>
