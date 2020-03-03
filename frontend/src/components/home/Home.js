@@ -10,11 +10,6 @@ const style = {
   'margin': '0'
 }
 
-// const style2 = {
-//   'background': 'url(https://res.cloudinary.com/dxxdamndt/image/upload/v1583257224/YochiVet/vet-white_tboeax.jpg) no-repeat center center',
-//   'box-sizing': 'content-box',
-//   'background-size': 'cover'
-// }
 
 function Home() {
   return (
@@ -27,7 +22,7 @@ function Home() {
         <Text color='white' pr='5%'>We have vets that can treat several diseases, form heart worms to behaviour.</Text>
         <Link to="/signup" ><Button variant="outline" color='white' variantColor="grey" m={2} mr='150px'>Create your account and start now! It's free</Button></Link>
       </Stack>
-      <Stack align="center" align="center" width="100%" direction="row" mt={0} pt={0} background="black">
+      <Stack align="center" width="100%" direction="row" mt={0} pt={0} background="black">
         <Box width='50%' color="white" mt={0} pt={0}>
         <Heading as="h4" size="md">Are you a veterinarian and want to join?</Heading>
         <Link to="/register-vet"><Button rightIcon="arrow-forward" variant="outline" variantColor="grey" m={2}>Click here to register</Button></Link>

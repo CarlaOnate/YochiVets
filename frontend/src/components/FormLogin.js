@@ -14,18 +14,18 @@ import {
 const FormLogin = ({handleLogin, submit, state}) => {
     const {loginForm: {email, password}} = state
     return (
-        <Box onSubmit={submit} as="form" h='100%'>
-        <FormControl isRequired h={'100%'} justifyContent="spaceAround">
+        <Box onSubmit={submit} as="form" >
+        <FormControl isRequired >
           <Heading>Login</Heading>
-            <InputGroup h='50%'>
-              <FormLabel htmlFor="text" h='10%'>Email</FormLabel>
+              <FormLabel >Email</FormLabel>
+            <InputGroup size="sm">
               <InputLeftAddon><Icon name="email"/></InputLeftAddon>
-              <Input onChange={handleLogin} value={email} name="email" type="text" placeholder="Email"/>
+              <Input onChange={handleLogin} value={email} name="email" type="email" placeholder="Email"/>
             </InputGroup>
 
-              <FormLabel htmlFor="email">Password</FormLabel>
-                <Input onChange={handleLogin} value={password} name="password" type="password" placeholder="Password"/>
-              <Button type="submit" p={2} m={4}>Login</Button>
+              <FormLabel>Password</FormLabel>
+                <Input size="sm" onChange={handleLogin} value={password} name="password" type="password" placeholder="Password"/>
+              <Button size="sm" type="submit" mt={3}>Login</Button>
         </FormControl>
         </Box>
     )

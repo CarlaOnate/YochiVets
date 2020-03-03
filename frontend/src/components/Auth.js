@@ -14,8 +14,8 @@ const Auth = () => {
     <MyContext.Consumer>
       {context => {
         return(
-      <Flex w="100vw" h="100vh" align="center" justify="center">
-        <Stack  p={8} border="1px" borderRadius="md" borderColor="gray.200" h={'100%'} rounded textAlign={'start'}>
+      <Flex align="top" width="100%" justify="center">
+        <Stack width='50%' p={8} rounded textAlign={'start'}>
           <FormSubmit
             submit={context.signupSubmit}
             signupInput={context.handleSignupInput}
@@ -23,7 +23,7 @@ const Auth = () => {
             state={context.state}
           />
          </Stack>
-        <Stack  p={8} border="1px" borderRadius="md" borderColor="gray.200" h={'100%'} rounded textAlign={'start'}>
+        <Stack width='50%' p={8} rounded textAlign={'start'}>
           <FormLogin
             submit={context.loginSubmit}
             handleLogin={context.handleLogin}
