@@ -8,9 +8,25 @@ import {
     Button,
     Box,
     Stack,
-    Spinner
+    Spinner,
+    Text,
+    RadioButtonGroup
   } from '@chakra-ui/core'
   import { getAllVetsAPI } from '../services'
+
+  const CustomRadio = React.forwardRef((props, ref) => {
+    const { isChecked, isDisabled, value, ...rest } = props;
+    return (
+      <Button
+        ref={ref}
+        variantColor={isChecked ? "blue" : "gray"}
+        aria-checked={isChecked}
+        role="radio"
+        isDisabled={isDisabled}
+        {...rest}
+      />
+    );
+  });
 
 export default class FindVets extends Component {
     state = {
@@ -33,13 +49,12 @@ export default class FindVets extends Component {
         this.setState({ vets: data.vets })
     }
 
-    handleSearchInput = async (e) => {
-      const {name, value} = e.target
+    handleSearchInput = async (val) => {
       this.setState((prevState) =>  ({
         ...prevState,
         searchInput: {
           ...prevState.searchInput,
-          [name]: value
+          specialty: val
         }
       }))
     }
@@ -62,20 +77,20 @@ export default class FindVets extends Component {
     render() {
       let { vets, spinner, noneFound,  searchInput: {specialty} } = this.state
         return (
-            <div>
-            <Heading>Find Vets</Heading>
+            <Stack>
+            <Heading as="h3" alignSelf='start' ml='5%'>Find Vets</Heading>
               <Stack m={4} direction="row" justify="space-around">
               <Box onSubmit={this.searchCheckboxSubmit} as="form">
-              <FormLabel>Search by specialty</FormLabel>
-              <RadioGroup onChange={this.handleSearchInput} value={specialty} name="specialty" isInline>
+              <RadioButtonGroup mb={3} defaultValue="all" onChange={this.handleSearchInput} value={specialty} name="specialty" isInline>
+              <FormLabel><Text fontSize="lg" color="gray.500">Search by Specialty</Text></FormLabel>
               {this.state.specialtyForm.map(el => {
                 return (
-                    <Radio key={el} value={el}>{el}</Radio>
+                  <CustomRadio size="sm" value={el} key={el}>{el}</CustomRadio>
                 )
               })}
-               </RadioGroup>
-               <Button onClick={this.backSearch} type="submit">Back</Button>
-               <Button type="submit">Search</Button>
+               </RadioButtonGroup>
+               <Button size="sm" m={2} onClick={this.backSearch} type="submit">Show All</Button>
+               <Button size="sm" m={2} variantColor='blue' type="submit">Search</Button>
               </Box>
             </Stack>
             <Stack direction="row" justify="space-around" wrap>
@@ -94,7 +109,7 @@ export default class FindVets extends Component {
               animal={el.studies.animal} id={el._id} />)
             })}
             </Stack>
-            </div>
+            </Stack>
         )
     }
 }
