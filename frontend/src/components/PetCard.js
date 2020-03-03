@@ -1,6 +1,6 @@
 import React from 'react'
-import { Stack, Box, Avatar, Heading, Button, FormControl,
-    FormLabel, Input, RadioGroup, Radio, Textarea, Icon} from '@chakra-ui/core'
+import { Stack, Box, Avatar, Heading, Button, FormControl, Flex, Image,
+    FormLabel, Input, RadioGroup, Radio, Textarea, Icon, Text} from '@chakra-ui/core'
 import EditPet from './EditPet'
 
 const PetCard = ({state, createPet, pets, user, createPetInput, petFormData, deletePet, handleCreatePetInput, onClickCreatePetButton, createPetSubmit,
@@ -9,7 +9,7 @@ const PetCard = ({state, createPet, pets, user, createPetInput, petFormData, del
         <Stack direction="column">
                     {user.pets.length === 0 ? (
                     <>
-                        <Heading>You have no pets</Heading>
+                        <Heading as="h3" size="md" color="yellow.600">You have no pets</Heading>
                     </>
                     ) : null }
                     {createPet ? (
@@ -45,24 +45,27 @@ const PetCard = ({state, createPet, pets, user, createPetInput, petFormData, del
                         </>
                     ) : (
                         <Stack direction='row'>
-                        {pets.map((el, index) => {
-                            return (
-                        <Stack key={el._id} >
-                        <Avatar key={el.image} src={el.image}></Avatar>
-                        <p key={el.name}>{el.name}: {el.age} years</p>
-                        <Stack direction="row">
-                        <Button key={el.index} name={el._id} onClick={editButton}><Icon name="view" m={2}/></Button>
-                        <Button name={el._id} onClick={deletePet} key={el.index}><Icon name="minus" m={2}/></Button>
-                        </Stack>
-                        </Stack>
-                            )
-                        })}
+                            {pets.map((el, index) => {
+                                return (
+                            <Stack key={el._id} justify="center" align="center" p={2} border='.5px solid rgba(198,198,198,.5)' borderRadius="10px">
+                                <Image key={el.image} src={el.image} size="100px" objectFit="cover"/>
+                                <Flex align="center">
+                                 <Heading as="h5" fontSize="sm" pr={2} key={el.name}>{el.name.toUpperCase()}</Heading>
+                                 <Text>{el.age} years</Text>
+                                </Flex>
+                                <Stack direction="row">
+                                <Button key={el.index} name={el._id} onClick={editButton} size="sm" variantColor="cyan"><Icon name="edit" m={2}/></Button>
+                                <Button name={el._id} onClick={deletePet} key={el.index} size="sm" variantColor="red"><Icon name="minus" m={2}/></Button>
+                                </Stack>
+                            </Stack>
+                                )
+                            })}
                         </Stack>
                     )}
                     {state.createPet ? (
                         <Button onClick={onClickCreatePetButton} m={3}>Back</Button>
                     ) : (
-                        <Button onClick={onClickCreatePetButton} m={3}><Icon name="add" m={2}/> New Pet</Button>
+                        <Button onClick={onClickCreatePetButton} m={3} size="sm" w='100%'><Icon name="add" m={2}/> New Pet</Button>
                     )}
                 </Stack>
     )

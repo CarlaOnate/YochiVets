@@ -1,6 +1,6 @@
 import React from 'react'
 import { Stack, Box, Image, List, ListItem, Heading, Button, FormControl,
-    FormLabel, Input, Flex, Text, ListIcon } from '@chakra-ui/core'
+    FormLabel, Input, Flex, Text } from '@chakra-ui/core'
 
 const UserProfile = ({user, edit, editInput, handleEditUserInputs, handleAddressEditInputs, editProfile, editSubmit, goBackEdit}) => {
     return (
@@ -8,37 +8,39 @@ const UserProfile = ({user, edit, editInput, handleEditUserInputs, handleAddress
         {!edit ? (
             <Stack>
             <Box p={5} textAlign='center'>
-            <Image src={user.image} w='40%' m={0}/>
+            <Heading as="h3" size="lg" mb={3}>Profile</Heading>
+            <Image src={user.image} w='40%' ml='auto' mr='auto' mb={5}/>
             <List>
                 <ListItem>
                     <Flex direction="row" align="center">
-                        <Heading as="h6" size="sm">NAME:</Heading><Text> {user.name}</Text>
+                        <Heading as="h6" size="xs" pr={3} >NAME</Heading>
+                        <Text ml={6}> {user.name}</Text>
                     </Flex>
                 </ListItem>
                 <ListItem>
                     <Flex direction="row" align="center">
-                        <Heading as="h6" size="sm">EMAIL:</Heading>
-                        <Text>{user.email}</Text>
+                        <Heading as="h6" size="xs" pr={3}>EMAIL:</Heading>
+                        <Text ml={6}>{user.email}</Text>
                     </Flex>
                 </ListItem>
                 <ListItem>
                 <Flex direction="row" align="center">
-                    <Heading as="h6" size="sm">PHONE:</Heading>
-                    <Text>{user.phone}</Text>
+                    <Heading as="h6" size="xs" pr={3}>PHONE:</Heading>
+                    <Text ml={6}>{user.phone}</Text>
                 </Flex>
                 </ListItem>
-                <Flex align="center" direction="column">
-                     <Heading as="h6" size="sm">ADDRESS: </Heading>
-                        <Flex align="center" direction="column">
+                <Flex align="start" direction="row">
+                     <Heading as="h6" size="xs">ADDRESS: </Heading>
+                        <Flex align="start" direction="column" >
                         {Object.entries(user.address).map((el, index) => {
                           return (
-                            <ListItem key={index}>{el[0].charAt(0).toUpperCase()}{el[0].slice(1, el[0].length)} : {el[1]}</ListItem>
+                            <ListItem  ml={6} key={index}>{el[1]}</ListItem>
                           )
                         })}
                         </Flex>
                 </Flex>
             </List>
-            <Button onClick={editProfile}>Edit Profile</Button>
+            <Button onClick={editProfile} size="sm" variantColor="teal"  mt={4}>Edit Profile</Button>
             </Box>
             </Stack>
             ) : (

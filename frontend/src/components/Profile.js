@@ -361,7 +361,7 @@ export default class Profile extends Component {
         } else {
             return (
                 <>
-                <Heading>Hello {user.name}</Heading>
+                <Heading as="h3" size="lg">Hello {user.name}</Heading>
                     <Stack direction='row' justify='space-around'>
                         <Stack w="30%" justifyContent="center">
                             <UserProfile user={user} editInput={editInput} handleEditUserInputs={this.handleEditUserInputs} editProfile={this.editProfile}
@@ -369,7 +369,7 @@ export default class Profile extends Component {
                             />
                         </Stack>
                         <Stack direction='column'>
-                        <Heading>Your Pets</Heading>
+                        <Heading as="h3" size="lg">Your Pets</Heading>
                             <PetCard state={this.state} createPet={createPet} pets={pets} user={user} createPetInput={createPetInput} petFormData={petFormData}
                             deletePet={this.deletePet} handleCreatePetInput={this.handleCreatePetInput} onClickCreatePetButton={this.onClickCreatePetButton} createPetSubmit={this.createPetSubmit}
                             edit={editPet} editButton={this.editPetButton} editInputs={editPetInputs} formData={petFormData} goBackEdit={this.goBackPetEdit} handleInputsEdit={this.handleEditPetInputs}
