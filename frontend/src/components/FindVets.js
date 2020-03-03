@@ -3,8 +3,6 @@ import VetCard from './VetCard'
 import {
     FormLabel,
     Heading,
-    Radio,
-    RadioGroup,
     Button,
     Box,
     Stack,
@@ -104,7 +102,7 @@ export default class FindVets extends Component {
               <Heading>No vets were found</Heading>
             ) : vets.map(el => {
               return (
-              <VetCard p={5} key={el._id} name={el.name}
+              <VetCard p={5} key={el._id} address={el.address} name={el.name}
               image={el.image} specialty={el.studies.specialty}
               animal={el.studies.animal} id={el._id} />)
             })}
