@@ -28,10 +28,22 @@ exports.getPet = async(req, res) => {
 exports.editPet = async (req, res, next) => {
     const {id} = req.params
     const {name, age, medicalHistory, sex, breed, sterilized} = req.body
-    const {secure_url} = req.file
-    await Pet.findByIdAndUpdate(id, {name, age, medicalHistory, image: secure_url, sex, breed, sterilized})
+    if(req.file){
+        const {secure_url} = req.file
+        await Pet.findByIdAndUpdate(id, {name, age, medicalHistory, image: secure_url, sex, breed, sterilized})
+    }
+    await Pet.findByIdAndUpdate(id, {name, age, medicalHistory, sex, breed, sterilized})
     let pet = await Pet.findById(id)
-    res.status(200).json({pet})
+    let user = await User.findById(req.user._id).populate('appointments').populate('pets').populate({
+        path: 'pets',
+        populate: {
+            path: 'appointments',
+            model: 'Appointment'
+        }
+    })
+    // if(!pet) return res.status(404).json({msg: 'Pet not found'})
+    // if(!user) return res.status(404).json({msg: 'User not found'})
+    res.status(200).json({user, pet})
 }
 
 exports.deletePet = async (req, res, next) => {

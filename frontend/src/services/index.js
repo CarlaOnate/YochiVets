@@ -71,6 +71,15 @@ export const createPet = async (pet) => {
   return await service.post('/pet', pet)
 }
 
+export const getPetAPI= async (id) => {
+return await service.get(`/pet/${id}`)
+}
+
+export const editPetAPI = async (newPet) => {
+  console.log(newPet.id)
+  return await service.put(`/pet/${newPet.id}`, newPet)
+}
+
 export const deletePet = async (id) => {
   return await service.delete(`/pet/${id}`)
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Stack, Box, ListItem, Avatar, Heading, Button, List, Icon,
-    FormLabel, Input, Flex, RadioGroup, Radio, InputGroup, EditableInput, FormControl} from '@chakra-ui/core'
+    FormLabel, Input, Flex, RadioGroup, Radio, InputGroup, FormControl} from '@chakra-ui/core'
 import { Link } from 'react-router-dom'
 
 

@@ -1,8 +1,10 @@
 import React from 'react'
 import { Stack, Box, Avatar, Heading, Button, FormControl,
     FormLabel, Input, RadioGroup, Radio, Textarea, Icon} from '@chakra-ui/core'
+import EditPet from './EditPet'
 
-const PetCard = ({state, createPet, pets, user, createPetInput, petFormData, deletePet, handleCreatePetInput, onClickCreatePetButton, createPetSubmit}) => {
+const PetCard = ({state, createPet, pets, user, createPetInput, petFormData, deletePet, handleCreatePetInput, onClickCreatePetButton, createPetSubmit,
+                edit, editButton, editInputs, formData, goBackEdit, handleInputsEdit, editSubmit}) => {
     return (
         <Stack direction="column">
                     {user.pets.length === 0 ? (
@@ -10,22 +12,7 @@ const PetCard = ({state, createPet, pets, user, createPetInput, petFormData, del
                         <Heading>You have no pets</Heading>
                     </>
                     ) : null }
-                    {createPet === false ? (
-                        <Stack direction='row'>
-                        {pets.map((el, index) => {
-                            return (
-                        <Stack key={el._id} >
-                        <Avatar key={el.image} src={el.image}></Avatar>
-                        <p key={el.name}>{el.name}: {el.age} years</p>
-                        <Stack direction="row">
-                        <Button key={el.index}><Icon name="view" m={2}/> MSF</Button>
-                        <Button name={el._id} onClick={deletePet} key={el.index}><Icon name="minus" m={2}/></Button>
-                        </Stack>
-                        </Stack>
-                            )
-                        })}
-                        </Stack>
-                    ) : (
+                    {createPet ? (
                         <Box as="form" onSubmit={createPetSubmit}>
                         <FormControl isRequired>
                             <FormLabel>Type in your pet's information</FormLabel>
@@ -52,6 +39,25 @@ const PetCard = ({state, createPet, pets, user, createPetInput, petFormData, del
                         </FormControl>
                         <Button type="submit" >Create</Button>
                         </Box>
+                    ) : edit ? (
+                        <>
+                        <EditPet editButton={editButton} inputs={editInputs} formData={formData} goBackPet={goBackEdit} handle={handleInputsEdit} submit={editSubmit}/>
+                        </>
+                    ) : (
+                        <Stack direction='row'>
+                        {pets.map((el, index) => {
+                            return (
+                        <Stack key={el._id} >
+                        <Avatar key={el.image} src={el.image}></Avatar>
+                        <p key={el.name}>{el.name}: {el.age} years</p>
+                        <Stack direction="row">
+                        <Button key={el.index} name={el._id} onClick={editButton}><Icon name="view" m={2}/></Button>
+                        <Button name={el._id} onClick={deletePet} key={el.index}><Icon name="minus" m={2}/></Button>
+                        </Stack>
+                        </Stack>
+                            )
+                        })}
+                        </Stack>
                     )}
                     {state.createPet ? (
                         <Button onClick={onClickCreatePetButton} m={3}>Back</Button>

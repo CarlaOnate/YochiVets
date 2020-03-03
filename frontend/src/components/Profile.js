@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Stack, Heading, Spinner, Button } from '@chakra-ui/core'
 import { getLogged, getUser, updateUser, createPet, deletePet, getClientAppointments, getAppointment,
-deleteAppointmentAPI } from '../services'
+deleteAppointmentAPI, getPetAPI, editPetAPI} from '../services'
 import { Link } from 'react-router-dom'
 import PetCard from './PetCard'
 import UserProfile from './UserProfile'
@@ -14,6 +14,7 @@ export default class Profile extends Component {
         pets: {},
         appointments: {},
         edit: false,
+        editPet: false,
         editAppointment: false,
         editInput: {},
         createPet: false,
@@ -44,6 +45,16 @@ export default class Profile extends Component {
             },
             time: '',
             hours: ''
+        },
+        editPetInputs: {
+            name: '',
+            age: '',
+            medicalHistory: [],
+            sex: '',
+            breed: '',
+            sterilized: '',
+            image: '',
+            id: ''
         }
     }
 
@@ -195,7 +206,6 @@ export default class Profile extends Component {
                 }
             }))
         }
-        console.log(this.state.editAppointmentInput)
     }
 
     onClickGoBackAppointment = (e) => {
@@ -215,7 +225,6 @@ export default class Profile extends Component {
 
     handleAppointmentAddressEditInputs = (e) => {
         const {name, value} = e.target
-        console.log(name, value)
         this.setState(prevState => ({
             ...prevState,
             editAppointmentInput: {
@@ -249,15 +258,93 @@ export default class Profile extends Component {
         const {name} = e.target
         let {data: {updatedUser}} = await deleteAppointmentAPI(name)
         let {data: {appointments}} = await getClientAppointments(updatedUser._id)
-        console.log(this.state.user)
         this.setState({user: updatedUser, pets: updatedUser.pets, appointments, editAppointment: false})
-        console.log(this.state.user)
     }
 
+    goBackPetEdit = () => {
+        this.setState({editPet: !this.state.editPet})
+    }
+
+    editPetButton  = async (e) => {
+        const {name} = e.target
+        const {data: {pet}} = await getPetAPI(name)
+        let sterilized = pet.sterilized ? 'Yes' : 'No'
+        this.setState(prevState => ({
+            ...prevState,
+            editPet: !this.state.editPet,
+            editPetInputs: {
+                ...prevState.editPetInputs,
+                name: pet.name,
+                age: pet.age,
+                medicalHistory: pet.medicalHistory,
+                sex: pet.sex,
+                breed: pet.breed,
+                sterilized,
+                image: pet.image,
+                id: pet._id
+            }
+        }))
+    }
+
+    handleEditPetInputs = (e) => {
+        const {name, value} = e.target
+        if(name === 'medicalHistory'){
+            this.setState(prevState => ({
+                ...prevState,
+                editPetInputs: {
+                    ...prevState.editPetInputs,
+                    [name]: [value]
+                }
+            }))
+        } else {
+            this.setState(prevState => ({
+                ...prevState,
+                editPetInputs: {
+                    ...prevState.editPetInputs,
+                    [name]: value
+                }
+            }))
+    }
+}
+
+    editPetSubmit = async (e) => {
+        e.preventDefault()
+        const {editPetInputs} = this.state
+        let sterilized = editPetInputs.sterilized === 'Yes' ? 'true' : 'false'
+        let newPet = {
+            name: editPetInputs.name,
+            age: editPetInputs.age,
+            medicalHistory: editPetInputs.medicalHistory,
+            sex: editPetInputs.sex,
+            breed: editPetInputs.breed,
+            sterilized,
+            image: editPetInputs.image,
+            id: editPetInputs.id
+        }
+        let {data} = await editPetAPI(newPet)
+        console.log('data',data)
+        this.setState(prevState => ({
+            ...prevState,
+            user: data.user,
+            pets: data.user.pets,
+            editPet: false,
+            editPetInputs: {
+                name: '',
+                age: '',
+                medicalHistory: [],
+                sex: '',
+                breed: '',
+                sterilized: '',
+                image: ''
+            }
+        }))
+    }
+
+
     render() {
-        console.log(this.state, this.state.appointments)
+        console.log(this.state, this.state.editPet)
         const {user, pets, appointments, edit, editInput, petFormData, createPetInput,
-            createPet, editAppointment, editAppointmentInput} = this.state
+            createPet, editAppointment, editAppointmentInput, editPet, editPetInputs} = this.state
         if(Object.entries(user).length === 0){
             return(
             <>
@@ -276,14 +363,16 @@ export default class Profile extends Component {
             return (
                 <>
                 <Heading>Hello {user.name}</Heading>
-                <Stack direction='row' justify='space-between'>
+                <Stack direction='row' justify='space-around'>
                 <UserProfile user={user} editInput={editInput} handleEditUserInputs={this.handleEditUserInputs} editProfile={this.editProfile}
                  editSubmit={this.editSubmit} goBackEdit={this.goBackEdit} edit={edit} handleAddressEditInputs={this.handleAddressEditInputs}
                 />
                 <Stack direction='column'>
                 <Heading>Your Pets</Heading>
                     <PetCard state={this.state} createPet={createPet} pets={pets} user={user} createPetInput={createPetInput} petFormData={petFormData}
-                    deletePet={this.deletePet} handleCreatePetInput={this.handleCreatePetInput} onClickCreatePetButton={this.onClickCreatePetButton} createPetSubmit={this.createPetSubmit}/>
+                    deletePet={this.deletePet} handleCreatePetInput={this.handleCreatePetInput} onClickCreatePetButton={this.onClickCreatePetButton} createPetSubmit={this.createPetSubmit}
+                    edit={editPet} editButton={this.editPetButton} editInputs={editPetInputs} formData={petFormData} goBackEdit={this.goBackPetEdit} handleInputsEdit={this.handleEditPetInputs}
+                    editSubmit={this.editPetSubmit}/>
                 <Heading>Appointments</Heading>
                 <AppointmentCard appointments={appointments} editAppointment={editAppointment} user={user} editAppointmentInput={editAppointmentInput}
                 onClickAppointment={this.onClickAppointment} onClickGoBackAppointment={this.onClickGoBackAppointment} handleInputsAppointment={this.handleEditAppointmentInputs}
