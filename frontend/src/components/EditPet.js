@@ -1,6 +1,6 @@
 import React from 'react'
-import { Stack, Box, Image, Button, FormControl,
-    FormLabel, Input, RadioGroup, Radio, Textarea, Icon} from '@chakra-ui/core'
+import { Box, Image, Button, FormControl,
+    FormLabel, Input, RadioGroup, Radio, Textarea } from '@chakra-ui/core'
 
 const EditPet = ({ inputs, formData, goBackPet, handle, submit}) => {
     return (

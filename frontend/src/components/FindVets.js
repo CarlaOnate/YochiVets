@@ -1,10 +1,6 @@
 import React, { Component } from 'react'
 import VetCard from './VetCard'
 import {
-    InputGroup,
-    InputLeftAddon,
-    Input,
-    Icon,
     FormLabel,
     Heading,
     Radio,
@@ -12,19 +8,19 @@ import {
     Button,
     Box,
     Stack,
-    Spinner,
-    InputRightAddon
+    Spinner
   } from '@chakra-ui/core'
-  import { getAllVetsAPI, getBySpecialty} from '../services'
+  import { getAllVetsAPI } from '../services'
 
 export default class FindVets extends Component {
     state = {
       vets: [],
       spinner: true,
+      noneFound: false,
       searchInput: {
-        bar: '',
         specialty: ''
-      }
+      },
+      specialtyForm: ['General Medicine','Behaviour', 'Cardiology', 'Neurology', 'Oncology', 'Nutrition']
     }
 
     componentDidMount = async () => {
@@ -48,40 +44,37 @@ export default class FindVets extends Component {
       }))
     }
 
-    searchBarSubmit = async () => {
-
-    }
-
     searchCheckboxSubmit = async (e) => {
       e.preventDefault()
-      let {data} = await getBySpecialty(this.state.searchInput.specialty)
-      this.setState({vets: data.vets})
+      let filtered = []
+      this.state.vets.forEach(el => {
+        if(el.studies.specialty === this.state.searchInput.specialty) return filtered.push(el)
+      })
+      if(filtered.length === 0) return this.setState({noneFound: true})
+      this.setState({vets: filtered})
+    }
+
+    backSearch = async () => {
+      await this.getAllVets()
+      this.setState({spinner: false, noneFound: false})
     }
 
     render() {
-      let { vets, spinner, searchInput: {bar, specialty} } = this.state
+      let { vets, spinner, noneFound,  searchInput: {specialty} } = this.state
         return (
             <div>
             <Heading>Find Vets</Heading>
-            <Box as="form">
-            <FormLabel>Search</FormLabel>
-              <InputGroup>
-                <InputLeftAddon><Icon name="search"/></InputLeftAddon>
-                <Input onChange={this.handleSearchInput} value={bar} name="bar" type="text" placeholder="Search" />
-                <InputRightAddon children={(<Button type="submit">Search</Button>)}/>
-              </InputGroup>
-              </Box>
               <Stack m={4} direction="row" justify="space-around">
               <Box onSubmit={this.searchCheckboxSubmit} as="form">
               <FormLabel>Search by specialty</FormLabel>
-              <RadioGroup onChange={this.handleSearchInput} value={specialty} name="specialty" key="0" isInline>
-                    <Radio  key="1" value="General Medicine">General Medicine</Radio>
-                    <Radio  key="2"  value="Behaviour">Behaviour</Radio>
-                    <Radio  key="3"  value="Cardiology">Cardiology</Radio>
-                    <Radio  key="4"  value="Neurology">Neurology</Radio>
-                    <Radio  key="5"  value="Oncology">Oncology</Radio>
-                    <Radio  key="6"  value="Nutrition">Nutrition</Radio>
+              <RadioGroup onChange={this.handleSearchInput} value={specialty} name="specialty" isInline>
+              {this.state.specialtyForm.map(el => {
+                return (
+                    <Radio key={el} value={el}>{el}</Radio>
+                )
+              })}
                </RadioGroup>
+               <Button onClick={this.backSearch} type="submit">Back</Button>
                <Button type="submit">Search</Button>
               </Box>
             </Stack>
@@ -92,7 +85,9 @@ export default class FindVets extends Component {
               emptyColor="gray.200"
               color="blue.500"
               size="xl"
-            />) : vets.map(el => {
+            />) : noneFound ? (
+              <Heading>No vets were found</Heading>
+            ) : vets.map(el => {
               return (
               <VetCard p={5} key={el._id} name={el.name}
               image={el.image} specialty={el.studies.specialty}
