@@ -303,10 +303,19 @@ export default class Profile extends Component {
                     [name]: value
                 }
             }))
+        }
     }
-}
+
+    randomKey = () => {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+          var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r && 0x3 | 0x8);
+          return v.toString(16);
+        })
+    }
+
 
     editPetSubmit = async (e) => {
+        console.log(this.randomKey())
         e.preventDefault()
         const {editPetInputs} = this.state
         let sterilized = editPetInputs.sterilized === 'Yes' ? 'true' : 'false'
@@ -321,7 +330,6 @@ export default class Profile extends Component {
             id: editPetInputs.id
         }
         let {data} = await editPetAPI(newPet)
-        console.log('data',data)
         this.setState(prevState => ({
             ...prevState,
             user: data.user,
@@ -341,7 +349,6 @@ export default class Profile extends Component {
 
 
     render() {
-        console.log(this.state, this.state.appointments)
         const {user, pets, appointments, edit, editInput, petFormData, createPetInput,
             createPet, editAppointment, editAppointmentInput, editPet, editPetInputs} = this.state
         if(Object.entries(user).length === 0){
@@ -372,7 +379,7 @@ export default class Profile extends Component {
                                 <PetCard state={this.state} createPet={createPet} pets={pets} user={user} createPetInput={createPetInput} petFormData={petFormData}
                                 deletePet={this.deletePet} handleCreatePetInput={this.handleCreatePetInput} onClickCreatePetButton={this.onClickCreatePetButton} createPetSubmit={this.createPetSubmit}
                                 edit={editPet} editButton={this.editPetButton} editInputs={editPetInputs} formData={petFormData} goBackEdit={this.goBackPetEdit} handleInputsEdit={this.handleEditPetInputs}
-                                editSubmit={this.editPetSubmit}/>
+                                editSubmit={this.editPetSubmit} randomKey={this.randomKey}/>
                         </Stack>
                         <Stack direction="column" pt={2} w="30%">
                         <Heading as="h3" size="lg">Appointments</Heading>

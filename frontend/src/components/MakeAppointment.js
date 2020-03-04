@@ -152,6 +152,12 @@ export default class MakeAppointment extends Component {
       this.setState({time: value})
     }
 
+    randomKey = () => {
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r && 0x3 | 0x8);
+        return v.toString(16);
+      })
+  }
 
     chooseColor = (specialty) => {
     for(const key in this.state.colors){
@@ -198,8 +204,8 @@ export default class MakeAppointment extends Component {
                           <Text fontSize="lg">Available Hours: </Text>
                           <List>
                           {this.state.vet.availableHours.map(el => (
-                            <ListItem isInline>
-                              <ListIcon key={el} icon="time" color="green.500" />
+                            <ListItem key={this.randomKey()} isInline>
+                              <ListIcon icon="time" color="green.500" />
                               {el}
                             </ListItem>
                           ))}
@@ -218,15 +224,15 @@ export default class MakeAppointment extends Component {
                             <Alert status="warning">
                               <AlertIcon />
                               You currently have no pets
-                              <Link to='/profile'><Button>Create One</Button></Link>
+                              <Link to='/profile' mt={3}><Button variantColor="blue">Create One</Button></Link>
                             </Alert>
                           </Stack>
                     ) : (
                       <>
-                      <RadioGroup name="pet" onChange={this.handlePetInput} value={petInput.pet} isInline mt={1}>
+                      <RadioGroup key={this.randomKey()} name="pet" onChange={this.handlePetInput} value={petInput.pet} isInline mt={1}>
                         {user.pets.map(el => {
                             return (
-                                <Radio key={el.name} value={el.name} >{el.name}</Radio>
+                                <Radio key={this.randomKey()} value={el.name} >{el.name}</Radio>
                             )
                         })}
                        </RadioGroup>
@@ -237,7 +243,7 @@ export default class MakeAppointment extends Component {
                         <FormLabel fontSize="md" mt={3}><strong>WHAT TIME?</strong></FormLabel>
                           {vet.availableHours.map(el => {
                             return(
-                              <Radio key={vet._id} value={el} mt={1}>{el}</Radio>
+                              <Radio key={this.randomKey()} value={el} mt={1}>{el}</Radio>
                             )
                           })}
                         </RadioGroup>
@@ -248,7 +254,7 @@ export default class MakeAppointment extends Component {
                         <List styleType="disc">
                         {Object.entries(user.address).map((el, index) => {
                           return (
-                          <ListItem key={index}>{el[0].charAt(0).toUpperCase()}{el[0].slice(1, el[0].length)} : {el[1]}</ListItem>
+                          <ListItem key={this.randomKey()}>{el[0].charAt(0).toUpperCase()}{el[0].slice(1, el[0].length)} : {el[1]}</ListItem>
                           )
                         })}
                         </List>
@@ -265,7 +271,11 @@ export default class MakeAppointment extends Component {
                           </InputGroup>
                         ) : null}
                        </RadioGroup>
+                       {this.state.petInput.pet === '' ? (
+                       <Button mt={3} type='submit' isDisabled variantColor='green'>Create Appointment</Button>
+                       ) : (
                        <Button mt={3} type='submit' variantColor='green'>Create Appointment</Button>
+                       )}
                        </>
                     )}
                       </Flex>

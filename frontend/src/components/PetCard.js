@@ -4,7 +4,7 @@ import { Stack, Box, Heading, Button, FormControl, Flex, Image,
 import EditPet from './EditPet'
 
 const PetCard = ({state, createPet, pets, user, createPetInput, petFormData, deletePet, handleCreatePetInput, onClickCreatePetButton, createPetSubmit,
-                edit, editButton, editInputs, formData, goBackEdit, handleInputsEdit, editSubmit}) => {
+                edit, editButton, editInputs, formData, goBackEdit, handleInputsEdit, editSubmit, randomKey}) => {
     return (
         <Stack direction="column">
                     {user.pets.length === 0 ? (
@@ -37,12 +37,10 @@ const PetCard = ({state, createPet, pets, user, createPetInput, petFormData, del
                                 })}
                             </RadioGroup>
                         </FormControl>
-                        <Button type="submit" >Create</Button>
+                        <Button type="submit" variantColor="green">Create</Button>
                         </Box>
                     ) : edit ? (
-                        <>
-                        <EditPet editButton={editButton} inputs={editInputs} formData={formData} goBackPet={goBackEdit} handle={handleInputsEdit} submit={editSubmit}/>
-                        </>
+                        <EditPet randomKey={randomKey} editButton={editButton} inputs={editInputs} formData={formData} goBackPet={goBackEdit} handle={handleInputsEdit} submit={editSubmit} variantColor="cyan"/>
                     ) : (
                         <Stack direction='column'>
                             {pets.map(el => {
@@ -63,7 +61,7 @@ const PetCard = ({state, createPet, pets, user, createPetInput, petFormData, del
                         </Stack>
                     )}
                     {state.createPet ? (
-                        <Button onClick={onClickCreatePetButton} m={3}>Back</Button>
+                        <Button onClick={onClickCreatePetButton} m={3} variantColor="cyan">Back</Button>
                     ) : (
                         <Button onClick={onClickCreatePetButton} mt={3} size="sm" w='100%'><Icon name="add" m={2}/> New Pet</Button>
                     )}

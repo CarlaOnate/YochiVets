@@ -13,7 +13,6 @@ const colors = {
 
 const chooseColor = (specialty) => {
     for(const key in colors){
-        console.log(key, specialty)
         if (key === specialty) return colors[key]
     }
 }
