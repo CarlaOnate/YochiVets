@@ -19,13 +19,26 @@ import {
     FormControl,
     Text,
     Tag,
-    ListIcon
+    ListIcon,
+    RadioButtonGroup
   } from '@chakra-ui/core'
 import { getUser, getLogged, createAppointment } from '../services'
 import { Link } from 'react-router-dom'
 import Unauthorized from './Unauthorized'
 
-
+const CustomRadio = React.forwardRef((props, ref) => {
+  const { isChecked, isDisabled, value, ...rest } = props;
+  return (
+    <Button
+      ref={ref}
+      variantColor={isChecked ? "blue" : "gray"}
+      aria-checked={isChecked}
+      role="radio"
+      isDisabled={isDisabled}
+      {...rest}
+    />
+  )
+})
 
 export default class MakeAppointment extends Component {
 
@@ -79,18 +92,16 @@ export default class MakeAppointment extends Component {
         }))
     }
 
-    handlePetInput = (e) => {
-      const { value} = e.target
+    handlePetInput = (value) => {
       this.setState({petInput: {pet: value}})
     }
 
-    handleAddressInput = (e) => {
-      const {name, value} = e.target
+    handleAddressInput = (value) => {
       this.setState(prevState => ({
         ...prevState,
         addressInput: {
           ...prevState.addressInput,
-          [name]: value
+          location: value
         }
       }))
     }
@@ -147,8 +158,7 @@ export default class MakeAppointment extends Component {
       this.props.history.push('/profile')
     }
 
-    handleTimeInput = (e) => {
-      const { value} = e.target
+    handleTimeInput = (value) => {
       this.setState({time: value})
     }
 
@@ -203,12 +213,14 @@ export default class MakeAppointment extends Component {
                           <Text p="2" fontSize="md">{vet.address.neighborhood}</Text>
                           <Text fontSize="lg">Available Hours: </Text>
                           <List>
+                            <Flex direction="row" justify='center' pt={2}>
                           {this.state.vet.availableHours.map(el => (
-                            <ListItem key={this.randomKey()} isInline>
+                            <ListItem key={this.randomKey()} isInline ml={2}>
                               <ListIcon icon="time" color="green.500" />
                               {el}
                             </ListItem>
                           ))}
+                            </Flex>
                           </List>
                         </Box>
                     </Stack>
@@ -229,48 +241,51 @@ export default class MakeAppointment extends Component {
                           </Stack>
                     ) : (
                       <>
-                      <RadioGroup key={this.randomKey()} name="pet" onChange={this.handlePetInput} value={petInput.pet} isInline mt={1}>
-                        {user.pets.map(el => {
+                       <RadioButtonGroup name="pet" onChange={this.handlePetInput} value={petInput.pet} isInline mt={1}>
+                       {user.pets.map(el => {
                             return (
-                                <Radio key={this.randomKey()} value={el.name} >{el.name}</Radio>
+                                <CustomRadio size="sm" key={this.randomKey()} value={el.name} >{el.name}</CustomRadio>
                             )
                         })}
-                       </RadioGroup>
+                       </RadioButtonGroup>
                        <FormLabel mt={2} fontSize="md"><strong>CHOOSE A DATE</strong></FormLabel>
                        <Input onChange={this.handleDateInput} type='date' min={dateInput.minDate} name='date' value={dateInput.date}></Input>
                        <Flex justify="center" align="center">
-                        <RadioGroup name="time" onChange={this.handleTimeInput} value={time} isInline>
+                        <RadioButtonGroup  name="time" onChange={this.handleTimeInput} value={time} isInline>
                         <FormLabel fontSize="md" mt={3}><strong>WHAT TIME?</strong></FormLabel>
-                          {vet.availableHours.map(el => {
-                            return(
-                              <Radio key={this.randomKey()} value={el} mt={1}>{el}</Radio>
+                       {vet.availableHours.map(el => {
+                            return (
+                                <CustomRadio size="sm" key={this.randomKey()} value={el} mt={1}>{el}</CustomRadio>
                             )
-                          })}
-                        </RadioGroup>
+                        })}
+                       </RadioButtonGroup>
                        </Flex>
                        <FormLabel fontSize="md" mt={2}><strong>LOCATION</strong></FormLabel>
-                       <RadioGroup name="location" onChange={this.handleAddressInput} value={addressInput.location}>
-                        <Radio value='clientAddress'>
-                        <List styleType="disc">
-                        {Object.entries(user.address).map((el, index) => {
-                          return (
-                          <ListItem key={this.randomKey()}>{el[0].charAt(0).toUpperCase()}{el[0].slice(1, el[0].length)} : {el[1]}</ListItem>
-                          )
+                       <RadioButtonGroup  name="location" onChange={this.handleAddressInput} value={addressInput.location}>
+                        <CustomRadio value="clientAddress" size="md" key={this.randomKey()} mb={2} h='70px'>
+                        <List>
+                        {Object.entries(user.address).map(el => {
+                            return (
+                              <>
+                              <ListItem key={this.randomKey()}>{el[0].charAt(0).toUpperCase()}{el[0].slice(1, el[0].length)} : {el[1]} </ListItem>
+                              </>
+                            )
                         })}
                         </List>
-                        </Radio>
-                        <Radio  value='Other'>Other</Radio>
-                        {addressInput.location === 'Other' ? (
-                          <InputGroup h='100%'>
-                           <Flex direction="column" h='100%'>
-                             <FormLabel htmlFor="text" >Address</FormLabel>
+                        </CustomRadio>
+                        <br/>
+                         <CustomRadio value='Other' size="sm">Other</CustomRadio>
+                       </RadioButtonGroup>
+                         {addressInput.location === 'Other' ? (
+                          <InputGroup h="150px">
+                           <Flex direction="column">
+                             <FormLabel>Address</FormLabel>
                              <Input onChange={this.handleOtherAddress} value={addressInput.other.street} name="street" type="text" placeholder="Street" />
                              <Input onChange={this.handleOtherAddress} value={addressInput.other.neighborhood} name="neighborhood" type="text" placeholder="Neighborhood" />
                              <Input onChange={this.handleOtherAddress} value={addressInput.other.code} name="code" type="number" placeholder="Postal code" />
                            </Flex>
                           </InputGroup>
                         ) : null}
-                       </RadioGroup>
                        {this.state.petInput.pet === '' ? (
                        <Button mt={3} type='submit' isDisabled variantColor='green'>Create Appointment</Button>
                        ) : (

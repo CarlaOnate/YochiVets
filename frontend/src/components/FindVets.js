@@ -12,7 +12,7 @@ import {
   } from '@chakra-ui/core'
   import { getAllVetsAPI } from '../services'
 
-  const CustomRadio = React.forwardRef((props, ref) => {
+const CustomRadio = React.forwardRef((props, ref) => {
     const { isChecked, isDisabled, value, ...rest } = props;
     return (
       <Button
@@ -23,8 +23,8 @@ import {
         isDisabled={isDisabled}
         {...rest}
       />
-    );
-  });
+    )
+  })
 
 export default class FindVets extends Component {
     state = {

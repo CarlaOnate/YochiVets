@@ -129,6 +129,32 @@ class MyProvider extends Component{
       ))
     }
 
+    handleSpecialtyButtonInput = (value) => {
+      this.setState(prevState => ({
+        ...prevState,
+        signupVet: {
+          ...prevState.signupVet,
+          studies: {
+            ...prevState.signupVet.studies,
+            specialty: value
+          }
+        }
+      }))
+    }
+
+    handleAnimalButtonInput = (value) => {
+      this.setState(prevState => ({
+        ...prevState,
+        signupVet: {
+          ...prevState.signupVet,
+          studies: {
+            ...prevState.signupVet.studies,
+            animal: value
+          }
+        }
+      }))
+    }
+
     handleHoursInput = (e) => {
       this.setState(prevState => ({
         ...prevState,
@@ -176,7 +202,7 @@ class MyProvider extends Component{
     render(){
       const {handleSignupInput, handleAddress, state, signupSubmit, logoutSubmit, loginSubmit,
         handleLogin, handleSignupVet, handleCounter, signupVetSubmit, handleVetAddress, handleStudiesInput
-      , handleHoursInput} = this
+      , handleHoursInput, handleSpecialtyButtonInput, handleAnimalButtonInput} = this
         return(
           <MyContext.Provider
           value={{
@@ -192,6 +218,8 @@ class MyProvider extends Component{
             handleVetAddress,
             handleStudiesInput,
             handleHoursInput,
+            handleSpecialtyButtonInput,
+            handleAnimalButtonInput,
             state
           }}
 
