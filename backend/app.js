@@ -22,8 +22,9 @@ const app = express();
 
 app.use(
   cors({
+    origin: 'http://localhost:3000',
     credentials: true,
-    origin: [process.env.FRONTENDPOINT]
+    methods: "GET,PUT,PATCH,POST,DELETE",
   })
 )
 
@@ -32,7 +33,7 @@ app.use(
     resave: false,
     saveUninitialized: true,
     secret: process.env.SECRET,
-    cookie: { maxAge: 1000 * 60 * 60 }
+    cookie: { maxAge: 1000 * 60 * 60 },
   })
 );
 
