@@ -181,11 +181,10 @@ export default class MakeAppointment extends Component {
         } else {
           return (
               <>
-                  <Heading as="h3" size="md">Make an Appointment</Heading>
+                  <Heading as="h3" size="lg" textAlign="start" ml={8}>Make an Appointment</Heading>
                   <Stack direction="row" justify="space-around">
                     <Stack justify="center" align="center">
-                        <Heading size="lg">Your veterinarian</Heading>
-                        <Box justify="center" align="center" borderWidth="1px" rounded="lg" overflow="hidden"  h="70vh">
+                        <Box justify="center" align="center" borderWidth="1px" rounded="lg" overflow="hidden"  h="70vh" mt={10}>
                           <Box p="2" fontSize="sm" letterSpacing="wide" color="white" height="15%"  backgroundColor={this.chooseColor(vet.studies.specialty)} >
                           <Heading as="h3" size="lg" color="white">{vet.specialty}</Heading>
                           </Box>
@@ -209,11 +208,11 @@ export default class MakeAppointment extends Component {
                     </Stack>
 
                   <Stack h="70vh">
-                    <Heading size="lg">Appointment</Heading>
-                    <Box onSubmit={this.appointmentSubmit} as="form" isRequired>
-                    <Flex justify="space-around" align="center">
+                    <Heading size="md" mt={4}>Appointment</Heading>
+                    <Box onSubmit={this.appointmentSubmit} as="form" isRequired mt={3}>
                     <FormControl isRequired>
-                      <FormLabel>Choose which pet needs the appointment</FormLabel>
+                    <Flex direction="column">
+                      <FormLabel fontSize="md"><strong>CHOOSE A PET</strong></FormLabel>
                       {user.pets.length === 0 ? (
                           <Stack direction='column'>
                             <Alert status="warning">
@@ -224,24 +223,26 @@ export default class MakeAppointment extends Component {
                           </Stack>
                     ) : (
                       <>
-                      <RadioGroup name="pet" onChange={this.handlePetInput} value={petInput.pet} isInline>
+                      <RadioGroup name="pet" onChange={this.handlePetInput} value={petInput.pet} isInline mt={1}>
                         {user.pets.map(el => {
                             return (
                                 <Radio key={el.name} value={el.name} >{el.name}</Radio>
                             )
                         })}
                        </RadioGroup>
-                       <FormLabel>When is the appointment?</FormLabel>
+                       <FormLabel mt={2} fontSize="md"><strong>CHOOSE A DATE</strong></FormLabel>
                        <Input onChange={this.handleDateInput} type='date' min={dateInput.minDate} name='date' value={dateInput.date}></Input>
-                       <RadioGroup name="time" onChange={this.handleTimeInput} value={time} isInline>
-                       <FormLabel>At what time?</FormLabel>
-                         {vet.availableHours.map(el => {
-                           return(
-                             <Radio key={vet._id} value={el}>{el}</Radio>
-                           )
-                         })}
-                       </RadioGroup>
-                       <FormLabel>Which location?</FormLabel>
+                       <Flex justify="center" align="center">
+                        <RadioGroup name="time" onChange={this.handleTimeInput} value={time} isInline>
+                        <FormLabel fontSize="md" mt={3}><strong>WHAT TIME?</strong></FormLabel>
+                          {vet.availableHours.map(el => {
+                            return(
+                              <Radio key={vet._id} value={el} mt={1}>{el}</Radio>
+                            )
+                          })}
+                        </RadioGroup>
+                       </Flex>
+                       <FormLabel fontSize="md" mt={2}><strong>LOCATION</strong></FormLabel>
                        <RadioGroup name="location" onChange={this.handleAddressInput} value={addressInput.location}>
                         <Radio value='clientAddress'>
                         <List styleType="disc">
@@ -264,11 +265,11 @@ export default class MakeAppointment extends Component {
                           </InputGroup>
                         ) : null}
                        </RadioGroup>
-                       <Button type='submit'>Create Appointment</Button>
+                       <Button mt={3} type='submit' variantColor='green'>Create Appointment</Button>
                        </>
                     )}
-                      </FormControl>
                       </Flex>
+                      </FormControl>
                       </Box>
                     </Stack>
                   </Stack>

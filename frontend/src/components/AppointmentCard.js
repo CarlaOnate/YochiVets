@@ -1,5 +1,5 @@
 import React from 'react'
-import { Stack, ListItem, Avatar, Heading, Button, List, Icon,
+import { Stack, ListItem, Avatar, Heading, Button, List, Icon, Box,
     FormLabel, Input, Flex, RadioGroup, Radio, InputGroup, FormControl, Text} from '@chakra-ui/core'
 import { Link } from 'react-router-dom'
 
@@ -16,9 +16,9 @@ const AppointmentCard = ({appointments, editAppointment, user, editAppointmentIn
             </>
             ) : editAppointment ?
             (
-                <>
+                <Box textAlign="start">
                 <FormControl isRequired>
-                <FormLabel>Choose a pet</FormLabel>
+                <FormLabel fontSize="md"><strong>CHOOSE A PET</strong></FormLabel>
                   <RadioGroup onChange={handleInputsAppointment} name="pet" value={editAppointmentInput.pet} isInline>
                     {user.pets.map((el, index) => {
                         return (
@@ -26,17 +26,17 @@ const AppointmentCard = ({appointments, editAppointment, user, editAppointmentIn
                         )
                     })}
                    </RadioGroup>
-                   <FormLabel>When is the appointment?</FormLabel>
+                   <FormLabel mt={2} fontSize="md"><strong>CHOOSE A DATE</strong></FormLabel>
                    <Input onChange={handleInputsAppointment} value={editAppointmentInput.date.slice(0,10)} name='date' type='date'></Input>
                    <RadioGroup name="time" onChange={handleInputsAppointment} value={editAppointmentInput.time} isInline>
-                       <FormLabel>At what time?</FormLabel>
+                   <FormLabel fontSize="md" mt={3}><strong>WHAT TIME?</strong></FormLabel>
                          {editAppointmentInput.hours.map(el => {
                            return (
                              <Radio key={el} value={el}>{el}</Radio>
                            )
                          })}
                     </RadioGroup>
-                   <FormLabel>Which location?</FormLabel>
+                    <FormLabel fontSize="md" mt={2}><strong>LOCATION</strong></FormLabel>
                    <RadioGroup name="location" value={editAppointmentInput.location} onChange={handleLocation}>
                     <Radio value='clientAddress'>
                     <List styleType="disc">
@@ -60,12 +60,13 @@ const AppointmentCard = ({appointments, editAppointment, user, editAppointmentIn
                     ) : null}
                    </RadioGroup>
                    <Stack direction='row'>
-                   <Button onClick={onClickGoBackAppointment} type='submit'>Go Back</Button>
-                   <Button type='submit'>Update</Button>
+                   <Flex direction="row">
+                    <Button onClick={onClickGoBackAppointment} type='submit' variantColor="cyan" mr={2} mt={3}>Go Back</Button>
+                    <Button type='submit' variantColor="green" mt={3}>Update</Button>
+                   </Flex>
                    </Stack>
                    </FormControl>
-
-                </>
+                </Box>
             ) : (
                 <Stack direction="column">
                 {appointments.map((el, index) => {
