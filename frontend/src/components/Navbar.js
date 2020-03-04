@@ -1,7 +1,7 @@
 import React from 'react'
 import { MyContext } from '../context'
 import { NavLink } from 'react-router-dom'
-import { Flex, Button } from '@chakra-ui/core'
+import { Flex, Button, Image } from '@chakra-ui/core'
 
 const linkStyle = {
     display: 'flex',
@@ -19,7 +19,8 @@ const Navbar = () => {
     <MyContext.Consumer>
     {context => {
         return (
-        <Flex as="nav" justify='flex-end' direction='row' style={navStyle}>
+        <Flex as="nav" justify='space-between' direction='row' style={navStyle}>
+            <Image src='/veterinary.svg' alt="logo" ml={2} w='30px'/>
             <div style={linkStyle}>
             <NavLink exact to="/"><Button variantColor="blue" size='sm'>Home</Button></NavLink>
             <NavLink exact to="/findVets" bg=''><Button size="sm" variant="link">Find Vets</Button></NavLink>

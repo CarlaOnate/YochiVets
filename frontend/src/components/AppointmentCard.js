@@ -6,12 +6,11 @@ import { Link } from 'react-router-dom'
 
 const AppointmentCard = ({appointments, editAppointment, user, editAppointmentInput, onClickAppointment, onClickGoBackAppointment,
     handleInputsAppointment, handleOtherInputs, handleLocation, deleteAppointment}) => {
-      console.log(appointments)
     return (
         <>
         {Object.entries(appointments).length === 0 ? (
             <>
-                <Heading>You have no appointments</Heading>
+                <Heading as="h3" size="md" color="yellow.600">You have no appointments</Heading>
                 <Link to="/findVets"><Button>Create one</Button></Link>
             </>
             ) : editAppointment ?
