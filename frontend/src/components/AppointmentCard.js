@@ -1,11 +1,12 @@
 import React from 'react'
-import { Stack, Box, ListItem, Avatar, Heading, Button, List, Icon,
-    FormLabel, Input, Flex, RadioGroup, Radio, InputGroup, FormControl} from '@chakra-ui/core'
+import { Stack, ListItem, Avatar, Heading, Button, List, Icon,
+    FormLabel, Input, Flex, RadioGroup, Radio, InputGroup, FormControl, Text} from '@chakra-ui/core'
 import { Link } from 'react-router-dom'
 
 
 const AppointmentCard = ({appointments, editAppointment, user, editAppointmentInput, onClickAppointment, onClickGoBackAppointment,
     handleInputsAppointment, handleOtherInputs, handleLocation, deleteAppointment}) => {
+      console.log(appointments)
     return (
         <>
         {Object.entries(appointments).length === 0 ? (
@@ -66,23 +67,24 @@ const AppointmentCard = ({appointments, editAppointment, user, editAppointmentIn
 
                 </>
             ) : (
-                <Stack direction="row">
-                {appointments.map(el => {
+                <Stack direction="column">
+                {appointments.map((el, index) => {
                     return (
-                    <Stack direction="row">
-                        <Box>
-                        <Avatar src={el.vet.image}/>
-                        <p>{el.vet.name}</p>
-                        <p>{el.vet.studies.animal}</p>
-                        <p>{el.vet.studies.sepcialty}</p>
-                        </Box>
-                        <Box>
-                            <p>Date: {el.date.slice(0, 9)}</p>
-                            {console.log(el)}
-                            <strong>Time: {el.time}</strong>
-                        </Box>
-                    <Button name={el._id} onClick={onClickAppointment} h='100%'><Icon name="view"/></Button>
-                    <Button name={el._id} onClick={deleteAppointment} h='100%'><Icon name="minus"/></Button>
+                    <Stack key={index} direction="row" p={2} align="center" justify="space-between" w='100%' border='.5px solid rgba(198,198,198,.5)' borderRadius="10px">
+                      <Avatar src={el.vet.image} size="lg"/>
+                      <Flex direction="column" justify="space-around" align="center">
+                        <Heading as="h4" size="sm" pb={2}>{el.vet.name} & {el.pet[0].name}</Heading>
+                          <Flex  direction="row" align="center">
+                            <Icon name="calendar" mr={2}/><Text fontSize="sm"> {el.date.slice(0, 9)}</Text>
+                          </Flex>
+                          <Flex direction="row" align="center">
+                            <Icon name="time" mr={2}/><Text fontSize="sm"> {el.time}</Text>
+                          </Flex>
+                      </Flex>
+                      <Flex direction="column" h='100%'>
+                        <Button name={el._id} onClick={onClickAppointment} mb={2} size="sm" variantColor="cyan"><Icon name="edit"/></Button>
+                        <Button name={el._id} onClick={deleteAppointment} size="sm" variantColor="red"><Icon name="minus"/></Button>
+                      </Flex>
                     </Stack>
                     )
                 })}

@@ -341,7 +341,7 @@ export default class Profile extends Component {
 
 
     render() {
-        console.log(this.state, this.state.editPet)
+        console.log(this.state, this.state.appointments)
         const {user, pets, appointments, edit, editInput, petFormData, createPetInput,
             createPet, editAppointment, editAppointmentInput, editPet, editPetInputs} = this.state
         if(Object.entries(user).length === 0){
@@ -367,15 +367,15 @@ export default class Profile extends Component {
                              editSubmit={this.editSubmit} goBackEdit={this.goBackEdit} edit={edit} handleAddressEditInputs={this.handleAddressEditInputs}
                             />
                         </Stack>
-                        <Stack direction="column">
+                        <Stack direction="column" pt={2}>
                             <Heading as="h3" size="lg">Your Pets</Heading>
                                 <PetCard state={this.state} createPet={createPet} pets={pets} user={user} createPetInput={createPetInput} petFormData={petFormData}
                                 deletePet={this.deletePet} handleCreatePetInput={this.handleCreatePetInput} onClickCreatePetButton={this.onClickCreatePetButton} createPetSubmit={this.createPetSubmit}
                                 edit={editPet} editButton={this.editPetButton} editInputs={editPetInputs} formData={petFormData} goBackEdit={this.goBackPetEdit} handleInputsEdit={this.handleEditPetInputs}
                                 editSubmit={this.editPetSubmit}/>
                         </Stack>
-                        <Stack direction="column">
-                        <Heading>Appointments</Heading>
+                        <Stack direction="column" pt={2} w="30%">
+                        <Heading as="h3" size="lg">Appointments</Heading>
                         <AppointmentCard appointments={appointments} editAppointment={editAppointment} user={user} editAppointmentInput={editAppointmentInput}
                         onClickAppointment={this.onClickAppointment} onClickGoBackAppointment={this.onClickGoBackAppointment} handleInputsAppointment={this.handleEditAppointmentInputs}
                         handleOtherInputs={this.handleAppointmentOtherAddressInputs} handleLocation={this.handleAppointmentAddressEditInputs} deleteAppointment={this.deleteAppointment}
