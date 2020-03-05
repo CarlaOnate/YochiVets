@@ -1,4 +1,5 @@
-# YochiVets
+# VetsforPets
+The name is yochiVets because I did not have the final when I started the project, so the final name is vets for pets
 Site to find a vet, ironhack final project.
 
 This site is to meant help vets earn some extra money. This app has 3 CRUDS for each model of mongoose, the way it works is that 
