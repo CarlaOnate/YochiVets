@@ -18,3 +18,6 @@ If you want to create your pets and make fake appointments for your pets feel fr
 
 https://vetsforpets.netlify.com/
 
+## How to run it locally?
+To test this on your computer simply clone the project and in the backend run npm run dev and in the frontend run npm start.
+This website has Atlas as a DB and uses heroky to store the backend API. To be fully functional you should and your .env with all the variables for the DB, cloudinary, frontEndpoint, and the baseURL for axios in the services folder inside fronted.
