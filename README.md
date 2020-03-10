@@ -11,9 +11,9 @@ This app has only the clients views for the moment
 - MakeAppointment: This has a simple form to create the appointment with the selected vet, in here you have to click all the fields in order to make the form otherwise it will not create the appointment.
 ![Landing page image](https://res.cloudinary.com/dxxdamndt/image/upload/v1583878204/Screen_Shot_2020-03-10_at_4.09.52_PM_maa7pj.png)
 - Profile: This is the main part of the app, here is where the client can create, edit or delete pets, appointment and its profile information. In here is where you can see all the current appointment created and all the pets that you have.
-![Landing page image](https://res.cloudinary.com/dxxdamndt/image/upload/v1583878256/Screen_Shot_2020-03-10_at_4.10.46_PM_zsyst0.png)
+![Landing page image](https://res.cloudinary.com/dxxdamndt/image/upload/v1583878640/Screen_Shot_2020-03-10_at_4.17.04_PM_gml1os.png) 
  
- ## Deployed site
+## Deployed site
 If you want to create your pets and make fake appointments for your pets feel free to do so. Here is the link to the deployed site.
 
 https://vetsforpets.netlify.com/
